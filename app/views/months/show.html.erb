@@ -1,0 +1,26 @@
+<h1>
+  <%= link_to @month.year.value, year_path(@month.year) %>
+  /
+  <%= @month.value %>
+</h1>
+
+<p>
+  <%= link_to 'New Event', new_event_path(starts_at: @month.starts_at) %>
+</p>
+
+<ul>
+  <% @month.weeks.each do |week| %>
+    <li>
+      <%= link_to week.value, year_week_path(@month.year, week) %>
+    </li>
+    <ul>
+      <% week.days.each do |day| %>
+        <li>
+          <%= link_to day.value, year_month_day_path(@month.year, @month, day) %>
+
+          <%= day.event_count %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</ul>

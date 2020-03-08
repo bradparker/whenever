@@ -1,3 +1,19 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :events, except: [:index]
+
+  resources :years, path: "", only: [:show], constraints: { id: /\d{4}/ } do
+    resources :weeks, only: [:show], constraints: { id: /\d{1,2}/ }
+    resources :months, path: "", only: [:show], constraints: { id: /\d{2}/ } do
+      resources :days, path: "", only: [:show], constraints: { id: /\d{2}/ }
+    end
+  end
+
+  get "/", to: redirect {
+    now = Time.now
+    year = Year.new(now.year)
+    month = Month.new(now.year, now.month)
+    day = Day.new(now.year, now.month, now.day)
+
+    "/#{year.to_param}/#{month.to_param}/#{day.to_param}"
+  }
 end

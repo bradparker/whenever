@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @event.title %>
+</p>
+
+<p>
+  <strong>Starts at:</strong>
+  <%= @event.starts_at %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @event.duration %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to @event.starts_at.to_s, year_month_day_path(@event.day.year, @event.day.month, @event.day) %>
