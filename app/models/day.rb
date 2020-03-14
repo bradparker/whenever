@@ -12,6 +12,16 @@ class Day
     Week.new(starts_at.year, starts_at.cweek)
   end
 
+  def prev
+    prev_starts_at = starts_at - 1.day
+    Day.new(prev_starts_at.year, prev_starts_at.month, prev_starts_at.day)
+  end
+
+  def next
+    next_starts_at = starts_at + 1.day
+    Day.new(next_starts_at.year, next_starts_at.month, next_starts_at.day)
+  end
+
   def starts_at
     Date.new(year.value, month.value, value)
   end

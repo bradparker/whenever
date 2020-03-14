@@ -31,10 +31,18 @@
   <%= link_to 'New Event', new_event_path(starts_at: @week.starts_at) %>
 </p>
 
+<p>
+  <%= link_to "#{@week.prev.year.value} / #{@week.prev.value}", year_week_path(@week.prev.year, @week.prev) %>
+  <%= link_to "#{@week.next.year.value} / #{@week.next.value}", year_week_path(@week.next.year, @week.next) %>
+</p>
+
 <ul>
   <% @week.days.each do |day| %>
     <li>
-      <%= link_to day.starts_at.day.to_s, year_month_day_path(day.year, day.month, day) %>
+      <%= link_to(
+        day.starts_at.day.to_s,
+        year_month_day_path(day.year, day.month, day)
+      ) %>
 
       <table>
         <thead>
@@ -55,7 +63,9 @@
               <td><%= link_to 'Show', event %></td>
               <td><%= link_to 'Edit', edit_event_path(event) %></td>
               <td>
-                <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Destroy', event, method: :delete, data: {
+                  confirm: 'Are you sure?'
+                } %>
               </td>
             </tr>
           <% end %>

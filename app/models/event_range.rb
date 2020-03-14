@@ -20,7 +20,7 @@ class EventRange
   end
 
   def by_date
-    scope.group_by { |event| event.starts_at.to_date }
+    @by_date ||= scope.group_by { |event| event.starts_at.to_date }
   end
 
   def counts

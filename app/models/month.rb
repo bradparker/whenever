@@ -11,6 +11,16 @@ class Month
     @starts_at ||= Date.new(year.value, value)
   end
 
+  def prev
+    prev_starts_at = starts_at - 1.month
+    Month.new(prev_starts_at.year, prev_starts_at.month)
+  end
+
+  def next
+    next_starts_at = starts_at + 1.month
+    Month.new(next_starts_at.year, next_starts_at.month)
+  end
+
   def weeks
     @weeks ||= (starts_at.cweek .. starts_at.end_of_month.cweek).map do |week|
       Week.new(year.value, week, event_range)

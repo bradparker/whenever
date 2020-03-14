@@ -23,6 +23,11 @@
 </ul>
 
 <p>
+  <%= link_to "#{@day.prev.year.value} / #{@day.prev.month.value} / #{@day.prev.value}", year_month_day_path(@day.prev.year, @day.prev.month, @day.prev) %>
+  <%= link_to "#{@day.next.year.value} / #{@day.next.month.value} / #{@day.next.value}", year_month_day_path(@day.next.year, @day.next.month, @day.next) %>
+</p>
+
+<p>
   <%= link_to 'New Event', new_event_path(starts_at: @day.starts_at) %>
 </p>
 

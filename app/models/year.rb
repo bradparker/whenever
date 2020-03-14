@@ -9,6 +9,14 @@ class Year
     Date.new(value.to_i)
   end
 
+  def prev
+    Year.new(value - 1)
+  end
+
+  def next
+    Year.new(value + 1)
+  end
+
   def months
     @months ||= (1..12).map do |month|
       Month.new(value, month, event_range)

@@ -8,7 +8,17 @@ class Week
   end
 
   def starts_at
-    Date.commercial(year.value, value)
+    @starts_at ||= Date.commercial(year.value, value)
+  end
+
+  def prev
+    prev_starts_at = starts_at - 1.week
+    Week.new(prev_starts_at.cwyear, prev_starts_at.cweek)
+  end
+
+  def next
+    next_starts_at = starts_at + 1.week
+    Week.new(next_starts_at.cwyear, next_starts_at.cweek)
   end
 
   def ends_at

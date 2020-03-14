@@ -3,23 +3,28 @@
 </h1>
 
 <p>
+  <%= link_to @year.prev.value, year_path(@year.prev) %>
+  <%= link_to @year.next.value, year_path(@year.next) %>
+</p>
+
+<p>
   <%= link_to 'New Event', new_event_path(starts_at: @year.starts_at) %>
 </p>
 
 <ul>
   <% @year.months.each do |month| %>
     <li>
-      <%= link_to month.value, year_month_path(@year, month)  %>
+      <%= link_to month.value, year_month_path(month.year, month)  %>
 
       <ul>
         <% month.weeks.each do |week| %>
           <li>
-            <%= link_to week.value, year_week_path(@year, week) %>
+            <%= link_to week.value, year_week_path(week.year, week) %>
           </li>
           <ul>
             <% week.days.each do |day| %>
               <li>
-                <%= link_to day.value, year_month_day_path(@year, month, day) %>
+                <%= link_to day.value, year_month_day_path(day.year, day.month, day) %>
 
                 <%= day.event_count %>
               </li>
