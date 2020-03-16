@@ -1,39 +1,28 @@
+<nav>
+  <ul>
+    <li>
+      <%= link_to @week.month.starts_at.strftime("%B, %Y"), year_month_path(@week.month.year, @week.month) %>
+    </li>
+  </ul>
+</nav>
+
 <h1>
-  Week <%= @week.value %>
-  <%= link_to @week.starts_at.year, year_path(@week.starts_at.year.to_s) %>
-  /
-  <%= link_to @week.starts_at.month, year_month_path(
-    @week.starts_at.year.to_s,
-    @week.starts_at.month.to_s.rjust(2, '0')
-  ) %>
-  /
-  <%= link_to @week.starts_at.day, year_month_day_path(
-    @week.starts_at.year.to_s,
-    @week.starts_at.month.to_s.rjust(2, '0'),
-    @week.starts_at.day.to_s.rjust(2, '0')
-  ) %>
-  &ndash;
-  <%= link_to @week.ends_at.year, year_path(@week.ends_at.year.to_s) %>
-  /
-  <%= link_to @week.ends_at.month, year_month_path(
-    @week.ends_at.year.to_s,
-    @week.ends_at.month.to_s.rjust(2, '0')
-  ) %>
-  /
-  <%= link_to @week.ends_at.day, year_month_day_path(
-    @week.ends_at.year.to_s,
-    @week.ends_at.month.to_s.rjust(2, '0'),
-    @week.ends_at.day.to_s.rjust(2, '0')
-  ) %>
+  Week <%= @week.value %>, <%= @week.year.value %>
 </h1>
 
-<p>
-  <%= link_to 'New Event', new_event_path(starts_at: @week.starts_at) %>
-</p>
+<nav>
+  <ul>
+    <li>
+      <%= link_to "Week #{@week.prev.value}, #{@week.prev.year.value}", year_week_path(@week.prev.year, @week.prev) %>
+    </li>
+    <li>
+      <%= link_to "Week #{@week.next.value}, #{@week.next.year.value}", year_week_path(@week.next.year, @week.next) %>
+    </li>
+  </ul>
+</nav>
 
 <p>
-  <%= link_to "#{@week.prev.year.value} / #{@week.prev.value}", year_week_path(@week.prev.year, @week.prev) %>
-  <%= link_to "#{@week.next.year.value} / #{@week.next.value}", year_week_path(@week.next.year, @week.next) %>
+<%= link_to 'New Event', new_event_path(starts_at: @week.starts_at) %>
 </p>
 
 <ul>
@@ -44,33 +33,33 @@
         year_month_day_path(day.year, day.month, day)
       ) %>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Starts at</th>
-            <th>Duration</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Starts at</th>
+          <th>Duration</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-        <tbody>
-          <% day.events.each do |event| %>
-            <tr>
-              <td><%= event.title %></td>
-              <td><%= event.starts_at %></td>
-              <td><%= event.duration %></td>
-              <td><%= link_to 'Show', event %></td>
-              <td><%= link_to 'Edit', edit_event_path(event) %></td>
-              <td>
-                <%= link_to 'Destroy', event, method: :delete, data: {
-                  confirm: 'Are you sure?'
-                } %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <tbody>
+        <% day.events.each do |event| %>
+          <tr>
+            <td><%= event.title %></td>
+            <td><%= event.starts_at %></td>
+            <td><%= event.duration %></td>
+            <td><%= link_to 'Show', event %></td>
+            <td><%= link_to 'Edit', edit_event_path(event) %></td>
+            <td>
+              <%= link_to 'Destroy', event, method: :delete, data: {
+                confirm: 'Are you sure?'
+              } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     </li>
   <% end %>
 </ul>

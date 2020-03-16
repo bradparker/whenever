@@ -1,13 +1,25 @@
+<nav>
+  <ul>
+    <li>
+      <%= link_to @month.year.value, year_path(@month.year) %>
+    </li>
+  </ul>
+</nav>
+
 <h1>
-  <%= link_to @month.year.value, year_path(@month.year) %>
-  /
-  <%= @month.value %>
+  <%= @month.starts_at.strftime("%B, %Y") %>
 </h1>
 
-<p>
-  <%= link_to "#{@month.prev.year.value} / #{@month.prev.value}", year_month_path(@month.prev.year, @month.prev) %>
-  <%= link_to "#{@month.next.year.value} / #{@month.next.value}", year_month_path(@month.next.year, @month.next) %>
-</p>
+<nav>
+  <ul>
+    <li>
+      <%= link_to @month.prev.starts_at.strftime("%B, %Y"), year_month_path(@month.prev.year, @month.prev) %>
+    </li>
+    <li>
+      <%= link_to @month.next.starts_at.strftime("%B, %Y"), year_month_path(@month.next.year, @month.next) %>
+    </li>
+  </ul>
+</nav>
 
 <p>
   <%= link_to 'New Event', new_event_path(starts_at: @month.starts_at) %>
@@ -16,7 +28,7 @@
 <ul>
   <% @month.weeks.each do |week| %>
     <li>
-      <%= link_to week.value, year_week_path(week.year, week) %>
+      <%= link_to "Week #{week.value}, #{week.year.value}" , year_week_path(week.year, week) %>
     </li>
     <ul>
       <% week.days.each do |day| %>

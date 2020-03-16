@@ -9,7 +9,7 @@ class Day
   end
 
   def week
-    Week.new(starts_at.year, starts_at.cweek)
+    Week.new(starts_at.cwyear, starts_at.cweek)
   end
 
   def prev
