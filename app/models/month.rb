@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Month
   attr_reader :year, :value
 
@@ -22,13 +24,15 @@ class Month
   end
 
   def weeks
-    @weeks ||= starts_at.all_month.map { |d| [d.cwyear, d.cweek] }.uniq.map do |year, week|
+    @weeks ||= starts_at.all_month.map { |day|
+      [day.cwyear, day.cweek]
+    }.uniq.map do |year, week|
       Week.new(year, week, event_range)
     end
   end
 
   def to_param
-    value.to_s.rjust(2, '0')
+    value.to_s.rjust(2, "0")
   end
 
   private

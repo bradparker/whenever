@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class EventsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -11,8 +13,14 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create event" do
-    assert_difference('Event.count') do
-      post events_url, params: { event: { duration: @event.duration, starts_at: @event.starts_at, title: @event.title } }
+    assert_difference("Event.count") do
+      post events_url, params: {
+        event: {
+          duration: @event.duration,
+          starts_at: @event.starts_at,
+          title: @event.title
+        }
+      }
     end
   end
 
@@ -27,12 +35,18 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update event" do
-    patch event_url(@event), params: { event: { duration: @event.duration, starts_at: @event.starts_at, title: @event.title } }
+    patch event_url(@event), params: {
+      event: {
+        duration: @event.duration,
+        starts_at: @event.starts_at,
+        title: @event.title
+      }
+    }
     assert_redirected_to event_url(@event)
   end
 
   test "should destroy event" do
-    assert_difference('Event.count', -1) do
+    assert_difference("Event.count", -1) do
       delete event_url(@event)
     end
 

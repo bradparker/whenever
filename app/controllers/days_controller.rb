@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DaysController < ApplicationController
   def show
     @day = Day.new(

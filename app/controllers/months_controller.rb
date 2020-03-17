@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MonthsController < ApplicationController
   def show
     @month = Month.new(

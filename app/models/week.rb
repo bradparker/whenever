@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Week
   attr_reader :year, :value
 

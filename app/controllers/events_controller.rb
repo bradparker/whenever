@@ -1,21 +1,21 @@
-class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+# frozen_string_literal: true
 
-  def show
-  end
+class EventsController < ApplicationController
+  before_action :set_event, only: %i[show edit update destroy]
+
+  def show; end
 
   def new
     @event = Event.new(starts_at: params[:starts_at] || Time.now)
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @event = Event.new(event_params)
 
     if @event.save
-      redirect_to @event, notice: 'Event was successfully created.'
+      redirect_to @event, notice: "Event was successfully created."
     else
       render :new
     end
@@ -23,7 +23,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      redirect_to @event, notice: 'Event was successfully updated.'
+      redirect_to @event, notice: "Event was successfully updated."
     else
       render :edit
     end
@@ -31,7 +31,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event.destroy
-    redirect_to events_url, notice: 'Event was successfully destroyed.'
+    redirect_to events_url, notice: "Event was successfully destroyed."
   end
 
   private

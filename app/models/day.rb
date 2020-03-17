@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Day
   attr_reader :year, :month, :value
 
@@ -35,7 +37,7 @@ class Day
   end
 
   def to_param
-    value.to_s.rjust(2, '0')
+    value.to_s.rjust(2, "0")
   end
 
   private
