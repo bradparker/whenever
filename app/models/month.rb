@@ -22,8 +22,8 @@ class Month
   end
 
   def weeks
-    @weeks ||= (starts_at.cweek .. starts_at.end_of_month.cweek).map do |week|
-      Week.new(year.value, week, event_range)
+    @weeks ||= starts_at.all_month.map { |d| [d.cwyear, d.cweek] }.uniq.map do |year, week|
+      Week.new(year, week, event_range)
     end
   end
 
