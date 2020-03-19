@@ -2,6 +2,7 @@
 nixpkgs.mkShell {
   buildInputs = with nixpkgs; [
     bundler
+    direnv
     docker-compose
     nodejs
     postgresql
@@ -10,4 +11,8 @@ nixpkgs.mkShell {
     yarn
     zlib
   ];
+  shellHook = ''
+    eval "$(direnv hook $SHELL)"
+    direnv allow
+  '';
 }
