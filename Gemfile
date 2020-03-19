@@ -28,4 +28,5 @@ end
 
 group :test do
   gem "rspec-rails", "~> 3.9"
+  gem "factory_bot_rails", "~> 5.1"
 end
