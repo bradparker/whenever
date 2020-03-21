@@ -14,7 +14,7 @@ Install the deps
 
 ```
 $ bundle
-$ yarn
+$ npm i
 ```
 
 Start the DB
