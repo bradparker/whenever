@@ -4,10 +4,17 @@ It's a calendar app written in Rails. If you want your world shook I suspect you
 
 ## Development
 
-Have [Nix](https://nixor.org/nix) installed. Then enter the shell.
+Have [Nix](https://nixos.org/nix) and [Docker](https://docs.docker.com/install/) installed. Then enter the Nix shell.
 
 ```
 $ nix-shell
+```
+
+Install the deps
+
+```
+$ bundle
+$ yarn
 ```
 
 Start the DB
@@ -16,10 +23,10 @@ Start the DB
 $ docker-compose up -d database
 ```
 
-Install the deps
+Setup the DB
 
 ```
-$ bundle
+$ bundle exec rails db:setup
 ```
 
 Run the app
