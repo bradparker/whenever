@@ -7,16 +7,20 @@
 </nav>
 
 <h1>
-  <%= @month.starts_at.strftime("%B, %Y") %>
+  <%= render(Months::LongNameComponent.new(month: @month)) %>
 </h1>
 
 <nav>
   <ul>
     <li>
-      <%= link_to @month.prev.starts_at.strftime("%B, %Y"), year_month_path(@month.prev.year, @month.prev) %>
+      <%= render(Months::LinkComponent.new(month: @month.prev)) do %>
+        <%= render(Months::LongNameComponent.new(month: @month.prev)) %>
+      <% end %>
     </li>
     <li>
-      <%= link_to @month.next.starts_at.strftime("%B, %Y"), year_month_path(@month.next.year, @month.next) %>
+      <%= render(Months::LinkComponent.new(month: @month.next)) do %>
+        <%= render(Months::LongNameComponent.new(month: @month.next)) %>
+      <% end %>
     </li>
   </ul>
 </nav>
@@ -28,7 +32,9 @@
 <ul>
   <% @month.weeks.each do |week| %>
     <li>
-      <%= link_to "Week #{week.value}, #{week.year.value}" , year_week_path(week.year, week) %>
+      <%= render(Weeks::LinkComponent.new(week: week)) do %>
+        <%= render(Weeks::LongNameComponent.new(week: week)) %>
+      <% end %>
     </li>
     <ul>
       <% week.days.each do |day| %>

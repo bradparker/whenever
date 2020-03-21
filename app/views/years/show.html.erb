@@ -18,12 +18,16 @@
 <ul>
   <% @year.months.each do |month| %>
     <li>
-      <%= link_to month.starts_at.strftime("%B"), year_month_path(month.year, month)  %>
+      <%= render(Months::LinkComponent.new(month: month)) do %>
+        <%= render(Months::NameComponent.new(month: month)) %>
+      <% end %>
 
       <ul>
         <% month.weeks.each do |week| %>
           <li>
-            <%= link_to "Week #{week.value}, #{week.year.value}" , year_week_path(week.year, week) %>
+            <%= render(Weeks::LinkComponent.new(week: week)) do %>
+              <%= render(Weeks::LongNameComponent.new(week: week)) %>
+            <% end %>
           </li>
           <ul>
             <% week.days.each do |day| %>

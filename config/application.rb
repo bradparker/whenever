@@ -1,6 +1,7 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
+require "view_component/engine"
 
 Bundler.require(*Rails.groups)
 

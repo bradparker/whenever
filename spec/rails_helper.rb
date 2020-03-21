@@ -9,6 +9,7 @@ if Rails.env.production?
   abort("The Rails environment is running in production mode!")
 end
 require "rspec/rails"
+require "view_component/test_helpers"
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -16,8 +17,10 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
 RSpec.configure do |config|
   config.filter_rails_from_backtrace!
+  config.include ViewComponent::TestHelpers, type: :component
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = true
 end

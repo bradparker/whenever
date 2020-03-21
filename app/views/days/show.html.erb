@@ -4,7 +4,9 @@
       <%= link_to @day.month.starts_at.strftime("%B"), year_month_path(@day.month.year, @day.month) %>
     </li>
     <li>
-      <%= link_to "Week #{@day.week.value}, #{@day.week.year.value}", year_week_path(@day.week.year, @day.week) %>
+      <%= render(Weeks::LinkComponent.new(week: @day.week)) do %>
+        <%= render(Weeks::LongNameComponent.new(week: @day.week)) %>
+      <% end %>
     </li>
   </ul>
 </nav>

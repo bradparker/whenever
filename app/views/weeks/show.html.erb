@@ -1,28 +1,34 @@
 <nav>
   <ul>
     <li>
-      <%= link_to @week.month.starts_at.strftime("%B, %Y"), year_month_path(@week.month.year, @week.month) %>
+      <%= render(Months::LinkComponent.new(month: @week.month)) do %>
+        <%= render(Months::LongNameComponent.new(month: @week.month)) %>
+      <% end %>
     </li>
   </ul>
 </nav>
 
 <h1>
-  Week <%= @week.value %>, <%= @week.year.value %>
+  <%= render(Weeks::LongNameComponent.new(week: @week)) %>
 </h1>
 
 <nav>
   <ul>
     <li>
-      <%= link_to "Week #{@week.prev.value}, #{@week.prev.year.value}", year_week_path(@week.prev.year, @week.prev) %>
+      <%= render(Weeks::LinkComponent.new(week: @week.prev)) do %>
+        <%= render(Weeks::LongNameComponent.new(week: @week.prev)) %>
+      <% end %>
     </li>
     <li>
-      <%= link_to "Week #{@week.next.value}, #{@week.next.year.value}", year_week_path(@week.next.year, @week.next) %>
+      <%= render(Weeks::LinkComponent.new(week: @week.next)) do %>
+        <%= render(Weeks::LongNameComponent.new(week: @week.next)) %>
+      <% end %>
     </li>
   </ul>
 </nav>
 
 <p>
-<%= link_to 'New Event', new_event_path(starts_at: @week.starts_at) %>
+  <%= link_to 'New Event', new_event_path(starts_at: @week.starts_at) %>
 </p>
 
 <ul>
