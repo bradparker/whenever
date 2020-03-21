@@ -3,5 +3,5 @@
 set -exuo pipefail
 
 bundle install
-yarn install
+npm install
 bundle exec rails db:setup
