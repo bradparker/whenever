@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 class Week
-  attr_reader :year, :value
+  attr_reader :year, :value, :starts_at
 
   def initialize(year, value, event_range = nil)
     @year = Year.new(year)
     @value = value
-    @event_range = event_range
-  end
 
-  def starts_at
-    @starts_at ||= Date.commercial(year.value, value)
+    @starts_at = Date.commercial(year, value)
+    @event_range = event_range
   end
 
   def prev

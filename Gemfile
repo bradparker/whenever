@@ -27,6 +27,7 @@ group :development do
 end
 
 group :test do
+  gem "degenerate", "~> 0.0.3"
+  gem "generative", "~> 0.2.4"
   gem "rspec-rails", "~> 3.9"
-  gem "factory_bot_rails", "~> 5.1"
 end

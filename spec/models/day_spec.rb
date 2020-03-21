@@ -1,19 +1,41 @@
 require "rails_helper"
+require_relative "../generators/date"
+require_relative "../generators/event"
 
 RSpec.describe Day do
-  context "when passed an EventRange" do
-    context "#events" do
-      it "returns the day's events from the provided EventRange" do
-        event_0 = create(:event, starts_at: Time.utc(2020, 3, 18))
-        event_1 = create(:event, starts_at: Time.utc(2020, 3, 19))
-        event_2 = create(:event, starts_at: Time.utc(2020, 3, 19))
-        event_3 = create(:event, starts_at: Time.utc(2020, 3, 20))
+  describe "#events" do
+    generative do
+      data (:day) do
+        date = Generative.generate(:date)
+        time = date.to_time(:utc)
+        count = Generative.generate(:integer, {
+          min: 2,
+          max: 100,
+        })
 
-        event_range = EventRange.new(Date.new(2020, 3).all_month)
+        (1 .. count).each do
+          Generative.generate(:event, {
+            starts_at: {
+              min: time - 1.year,
+              max: time + 1.year,
+            }
+          }).save!
+        end
+        Generative.generate(:event, {
+          starts_at: {
+            min: time,
+            max: time.end_of_day,
+          }
+        }).save!
 
-        day = Day.new(2020, 3, 19, event_range)
+        Day.new(date.year, date.month, date.day)
+      end
 
-        expect(day.events).to eq([event_1, event_2])
+      it "returns only events for that day" do
+        dates = day.events.map do |event|
+          event.starts_at.to_date
+        end
+        expect(dates.uniq).to eq([day.starts_at.to_date])
       end
     end
   end

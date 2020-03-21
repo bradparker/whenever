@@ -7,7 +7,6 @@ nixpkgs.mkShell {
     nodejs
     postgresql
     ruby
-    sqlite
     yarn
     zlib
   ];
