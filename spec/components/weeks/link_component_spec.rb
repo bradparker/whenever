@@ -5,6 +5,8 @@ RSpec.describe Weeks::LinkComponent, type: :component do
     result = render_inline(Weeks::LinkComponent.new(week: Week.new(2020, 9))) do
       "Some link content"
     end
-    expect(result.to_html).to eq("<a href=\"/2020/weeks/9\">Some link content</a>\n")
+    expect(result.to_html).to eq(
+      "<a href=\"/2020/weeks/9\">Some link content</a>\n"
+    )
   end
 end

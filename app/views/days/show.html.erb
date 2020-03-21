@@ -1,7 +1,9 @@
 <nav>
   <ul>
     <li>
-      <%= link_to @day.month.starts_at.strftime("%B"), year_month_path(@day.month.year, @day.month) %>
+      <%= render(Months::LinkComponent.new(month: @day.month)) do %>
+        <%= render(Months::NameComponent.new(month: @day.month)) %>
+      <% end %>
     </li>
     <li>
       <%= render(Weeks::LinkComponent.new(week: @day.week)) do %>
@@ -18,10 +20,14 @@
 <nav>
   <ul>
     <li>
-      <%= link_to @day.prev.starts_at.to_s, year_month_day_path(@day.prev.year, @day.prev.month, @day.prev) %>
+      <%= render(Days::LinkComponent.new(day: @day.prev)) do %>
+        <%= @day.prev.starts_at.to_s %>
+      <% end %>
     </li>
     <li>
-      <%= link_to @day.next.starts_at.to_s, year_month_day_path(@day.next.year, @day.next.month, @day.next) %>
+      <%= render(Days::LinkComponent.new(day: @day.next)) do %>
+        <%= @day.next.starts_at.to_s %>
+      <% end %>
     </li>
   </ul>
 </nav>

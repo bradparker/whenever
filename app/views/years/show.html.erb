@@ -32,7 +32,9 @@
           <ul>
             <% week.days.each do |day| %>
               <li>
-                <%= link_to day.value, year_month_day_path(day.year, day.month, day) %>
+                <%= render(Days::LinkComponent.new(day: day)) do %>
+                  <%= day.value.to_s %>
+                <% end %>
 
                 <%= day.event_count %>
               </li>

@@ -17,6 +17,7 @@ gem "bootsnap", ">= 1.4.2", require: false
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "rspec-rails", "~> 3.9"
 end
 
 group :development do
@@ -30,5 +31,4 @@ end
 group :test do
   gem "degenerate", "~> 0.0.3"
   gem "generative", "~> 0.2.4"
-  gem "rspec-rails", "~> 3.9"
 end
