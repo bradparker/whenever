@@ -2,6 +2,7 @@
 nixpkgs.mkShell {
   buildInputs = with nixpkgs; [
     bundler
+    lzma
     nodejs
     postgresql
     ruby
