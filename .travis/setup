@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -exuo pipefail
+
+bundle install
+yarn install
+bundle exec rails db:setup

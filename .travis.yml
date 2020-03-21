@@ -1,0 +1,12 @@
+sudo: true
+language: nix
+cache:
+  directories:
+    - /nix/store
+    - vendor/bundle
+addons:
+  postgresql: "9.6"
+services:
+  - postgresql
+before_script: nix-shell .travis/shell.nix --run .travis/setup
+script: nix-shell .travis/shell.nix --run .travis/test
