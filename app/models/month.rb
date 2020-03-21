@@ -35,6 +35,18 @@ class Month
     value.to_s.rjust(2, "0")
   end
 
+  def eql?(other)
+    year == other.year && value == other.value
+  end
+
+  def ==(other)
+    eql?(other)
+  end
+
+  def hash
+    year.hash ^ value.hash
+  end
+
   private
 
   def event_range

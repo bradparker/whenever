@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
+require "forwardable"
+
 class Day
-  attr_reader :year, :month, :value
+  extend Forwardable
+
+  def_delegators :month, :year
+
+  attr_reader :month, :value
 
   def initialize(year, month, value, event_range = nil)
-    @year = Year.new(year)
     @month = Month.new(year, month)
     @value = value
     @event_range = event_range
@@ -38,6 +43,18 @@ class Day
 
   def to_param
     value.to_s.rjust(2, "0")
+  end
+
+  def eql?(other)
+    month == other.month && value == other.value
+  end
+
+  def ==(other)
+    eql?(other)
+  end
+
+  def hash
+    month.hash ^ value.hash
   end
 
   private

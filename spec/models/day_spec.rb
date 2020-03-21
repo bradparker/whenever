@@ -32,10 +32,8 @@ RSpec.describe Day do
       end
 
       it "returns only events for that day" do
-        dates = day.events.map do |event|
-          event.starts_at.to_date
-        end
-        expect(dates.uniq).to eq([day.starts_at.to_date])
+        days = day.events.map(&:day)
+        expect(days.uniq).to eq([day])
       end
     end
   end
