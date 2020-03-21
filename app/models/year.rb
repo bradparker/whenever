@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class Year
-  attr_reader :value
+  attr_reader :value, :starts_at
 
   def initialize(value)
     @value = value
-  end
-
-  def starts_at
-    Date.new(value.to_i)
+    @starts_at = Date.new(value.to_i)
   end
 
   def prev
@@ -27,6 +24,18 @@ class Year
 
   def to_param
     value.to_s.rjust(4, "0")
+  end
+
+  def eql?(other)
+    value == other.value
+  end
+
+  def ==(other)
+    eql?(other)
+  end
+
+  def hash
+    value.hash
   end
 
   private
