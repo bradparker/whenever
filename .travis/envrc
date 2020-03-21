@@ -1,3 +1,3 @@
 export GENERATIVE_COUNT=100
 export RAILS_ENV=test
-export TEST_DATABASE_URL=postgres://localhost:5432/whenever_test
+export DATABASE_URL=postgres://localhost:5432/whenever

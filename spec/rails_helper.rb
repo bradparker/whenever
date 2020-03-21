@@ -1,7 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
-ENV["DATABASE_URL"] = ENV["TEST_DATABASE_URL"]
+ENV["DATABASE_URL"] = ENV.fetch("TEST_DATABASE_URL") do
+  ENV.fetch("DATABASE_URL")
+end
 
 require File.expand_path("../config/environment", __dir__)
 

@@ -2,4 +2,6 @@
 
 set -exuo pipefail
 
+source .travis/envrc
+
 bundle exec rspec
