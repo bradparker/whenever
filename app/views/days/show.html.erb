@@ -51,13 +51,31 @@
   <tbody>
     <% @day.events.each do |event| %>
       <tr>
-        <td><%= event.title %></td>
+        <td>
+          <%= render(Events::LinkComponent.new(
+            event: event,
+            time_range: @day
+          )) do %>
+            <%= event.title %>
+          <% end %>
+        </td>
         <td><%= event.starts_at %></td>
         <td><%= event.duration %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td>
-          <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= render(Events::EditLinkComponent.new(
+            event: event,
+            time_range: @day
+          )) do %>
+            Edit
+          <% end %>
+        </td>
+        <td>
+          <%= render(Events::DestroyComponent.new(
+            event: event,
+            time_range: @day
+          )) do %>
+            Destroy
+          <% end %>
         </td>
       </tr>
     <% end %>
