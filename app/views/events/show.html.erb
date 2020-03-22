@@ -11,8 +11,8 @@
 </p>
 
 <p>
-  <strong>Duration:</strong>
-  <%= @event.duration %>
+  <strong>Ends at:</strong>
+  <%= @event.ends_at %>
 </p>
 
 <%= render(Events::EditLinkComponent.new(event: @event, time_range: @time_range)) do %>

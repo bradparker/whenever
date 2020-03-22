@@ -19,9 +19,10 @@ ActiveRecord::Schema.define(version: 2020_03_08_102312) do
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.datetime "starts_at"
-    t.integer "duration"
+    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["ends_at"], name: "index_events_on_ends_at"
     t.index ["starts_at"], name: "index_events_on_starts_at"
   end
 

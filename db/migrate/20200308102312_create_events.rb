@@ -4,10 +4,11 @@ class CreateEvents < ActiveRecord::Migration[6.0]
     create_table :events, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.string :title
       t.datetime :starts_at
-      t.integer :duration
+      t.datetime :ends_at
 
       t.timestamps
     end
     add_index :events, :starts_at
+    add_index :events, :ends_at
   end
 end

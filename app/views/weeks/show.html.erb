@@ -45,7 +45,7 @@
           <tr>
             <th>Title</th>
             <th>Starts at</th>
-            <th>Duration</th>
+            <th>Ends at</th>
             <th colspan="2"></th>
           </tr>
         </thead>
@@ -62,7 +62,7 @@
                 <% end %>
               </td>
               <td><%= event.starts_at %></td>
-              <td><%= event.duration %></td>
+              <td><%= event.ends_at %></td>
               <td>
                 <%= render(Events::EditLinkComponent.new(
                   event: event,

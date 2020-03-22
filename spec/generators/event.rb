@@ -13,7 +13,7 @@ class EventGenerator
       id: id,
       title: title,
       starts_at: starts_at,
-      duration: duration,
+      ends_at: ends_at,
       created_at: created_at,
       updated_at: updated_at,
     )
@@ -28,30 +28,29 @@ class EventGenerator
   end
 
   def id
-    options.fetch(:id, SecureRandom.uuid)
+    @id ||= options.fetch(:id, SecureRandom.uuid)
   end
 
   def title
-    Generative.generate(:string, options.fetch(:title, {}))
+    @title ||= Generative.generate(:string, options.fetch(:title, {}))
   end
 
   def starts_at
-    Generative.generate(:time, options.fetch(:starts_at, {}))
+    @starts_at ||= Generative.generate(:time, options.fetch(:starts_at, {}))
   end
 
-  def duration
-    Generative.generate(:integer, options.fetch(:duration, {
-      min: 0,
-      max: 2_147_483_647,
+  def ends_at
+    @ends_at ||= Generative.generate(:time, options.fetch(:ends_at, {
+      min: starts_at,
     }))
   end
 
   def created_at
-    Generative.generate(:time, options.fetch(:created_at, {}))
+    @created_at ||= Generative.generate(:time, options.fetch(:created_at, {}))
   end
 
   def updated_at
-    Generative.generate(:time, options.fetch(:updated_at, {
+    @updated_at ||= Generative.generate(:time, options.fetch(:updated_at, {
       min: created_at,
     }))
   end

@@ -22,8 +22,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :duration %>
-    <%= form.number_field :duration %>
+    <%= form.label :ends_at %>
+    <%= form.datetime_select :ends_at %>
   </div>
 
   <%= form.hidden_field :time_range, value: TimeRange.name(@time_range) %>
