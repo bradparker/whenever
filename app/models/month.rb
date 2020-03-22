@@ -1,26 +1,25 @@
 # frozen_string_literal: true
 
 class Month
-  attr_reader :year, :value
+  def self.from_date(date)
+    new(date.year, date.month)
+  end
+
+  attr_reader :year, :value, :starts_at
 
   def initialize(year, value, event_range = nil)
     @year = Year.new(year)
     @value = value
+    @starts_at = Date.new(year, value)
     @event_range = event_range
   end
 
-  def starts_at
-    @starts_at ||= Date.new(year.value, value)
-  end
-
   def prev
-    prev_starts_at = starts_at - 1.month
-    Month.new(prev_starts_at.year, prev_starts_at.month)
+    Month.from_date(starts_at.prev_month)
   end
 
   def next
-    next_starts_at = starts_at + 1.month
-    Month.new(next_starts_at.year, next_starts_at.month)
+    Month.from_date(starts_at.next_month)
   end
 
   def weeks

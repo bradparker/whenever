@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Year
+  def self.from_date(date)
+    new(date.year)
+  end
+
   attr_reader :value, :starts_at
 
   def initialize(value)

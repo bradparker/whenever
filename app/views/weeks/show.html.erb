@@ -1,7 +1,7 @@
 <nav>
   <ul>
     <li>
-      <%= render(Months::LinkComponent.new(month: @week.month)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: @week.month)) do %>
         <%= render(Months::LongNameComponent.new(month: @week.month)) %>
       <% end %>
     </li>
@@ -15,12 +15,12 @@
 <nav>
   <ul>
     <li>
-      <%= render(Weeks::LinkComponent.new(week: @week.prev)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: @week.prev)) do %>
         <%= render(Weeks::LongNameComponent.new(week: @week.prev)) %>
       <% end %>
     </li>
     <li>
-      <%= render(Weeks::LinkComponent.new(week: @week.next)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: @week.next)) do %>
         <%= render(Weeks::LongNameComponent.new(week: @week.next)) %>
       <% end %>
     </li>
@@ -28,13 +28,15 @@
 </nav>
 
 <p>
-  <%= link_to "New Event", new_event_path(starts_at: @week.starts_at) %>
+  <%= render(Events::NewLinkComponent.new(time_range: @week)) do %>
+    New Event
+  <% end %>
 </p>
 
 <ul>
   <% @week.days.each do |day| %>
     <li>
-      <%= render(Days::LinkComponent.new(day: day)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
         <%= day.value.to_s %>
       <% end %>
 
@@ -44,22 +46,38 @@
             <th>Title</th>
             <th>Starts at</th>
             <th>Duration</th>
-            <th colspan="3"></th>
+            <th colspan="2"></th>
           </tr>
         </thead>
 
         <tbody>
           <% day.events.each do |event| %>
             <tr>
-              <td><%= event.title %></td>
+              <td>
+                <%= render(Events::LinkComponent.new(
+                  event: event,
+                  time_range: @week
+                )) do %>
+                  <%= event.title %>
+                <% end %>
+              </td>
               <td><%= event.starts_at %></td>
               <td><%= event.duration %></td>
-              <td><%= link_to "Show", event %></td>
-              <td><%= link_to "Edit", edit_event_path(event) %></td>
               <td>
-                <%= link_to("Destroy", event, method: :delete, data: {
-                  confirm: "Are you sure?",
-                }) %>
+                <%= render(Events::EditLinkComponent.new(
+                  event: event,
+                  time_range: @week
+                )) do %>
+                  Edit
+                <% end %>
+              </td>
+              <td>
+                <%= render(Events::DestroyComponent.new(
+                  event: event,
+                  time_range: @week
+                )) do %>
+                  Destroy
+                <% end %>
               </td>
             </tr>
           <% end %>

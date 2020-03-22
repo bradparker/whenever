@@ -2,4 +2,6 @@
 
 <%= render 'form', event: @event %>
 
-<%= link_to 'Cancel', year_month_day_path(@event.day.year, @event.day.month, @event.day) %>
+<%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
+  Cancel
+<% end %>

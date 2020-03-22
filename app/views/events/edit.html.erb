@@ -2,5 +2,12 @@
 
 <%= render 'form', event: @event %>
 
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
+<%= render(Events::LinkComponent.new(
+  event: @event,
+  time_range: @time_range
+)) do %>
+  Back to event
+<% end %> |
+<%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
+  Back to <%= TimeRange.name(@time_range) %>
+<% end %>

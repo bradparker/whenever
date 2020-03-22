@@ -13,12 +13,12 @@
 <nav>
   <ul>
     <li>
-      <%= render(Months::LinkComponent.new(month: @month.prev)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: @month.prev)) do %>
         <%= render(Months::LongNameComponent.new(month: @month.prev)) %>
       <% end %>
     </li>
     <li>
-      <%= render(Months::LinkComponent.new(month: @month.next)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: @month.next)) do %>
         <%= render(Months::LongNameComponent.new(month: @month.next)) %>
       <% end %>
     </li>
@@ -26,20 +26,22 @@
 </nav>
 
 <p>
-  <%= link_to 'New Event', new_event_path(starts_at: @month.starts_at) %>
+  <%= render(Events::NewLinkComponent.new(time_range: @month)) do %>
+    New Event
+  <% end %>
 </p>
 
 <ul>
   <% @month.weeks.each do |week| %>
     <li>
-      <%= render(Weeks::LinkComponent.new(week: week)) do %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
         <%= render(Weeks::LongNameComponent.new(week: week)) %>
       <% end %>
     </li>
     <ul>
       <% week.days.each do |day| %>
         <li>
-          <%= render(Days::LinkComponent.new(day: day)) do %>
+          <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
             <%= day.value.to_s %>
           <% end %>
 

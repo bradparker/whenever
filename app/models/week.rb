@@ -1,32 +1,29 @@
 # frozen_string_literal: true
 
 class Week
+  def self.from_date(date)
+    new(date.cwyear, date.cweek)
+  end
+
   attr_reader :year, :value, :starts_at
 
   def initialize(year, value, event_range = nil)
     @year = Year.new(year)
     @value = value
-
     @starts_at = Date.commercial(year, value)
     @event_range = event_range
   end
 
   def prev
-    prev_starts_at = starts_at - 1.week
-    Week.new(prev_starts_at.cwyear, prev_starts_at.cweek)
+    Week.from_date(starts_at.prev_week)
   end
 
   def next
-    next_starts_at = starts_at + 1.week
-    Week.new(next_starts_at.cwyear, next_starts_at.cweek)
-  end
-
-  def ends_at
-    starts_at.end_of_week
+    Week.from_date(starts_at.next_week)
   end
 
   def month
-    Month.new(starts_at.year, starts_at.month)
+    Month.from_date(starts_at)
   end
 
   def days

@@ -15,5 +15,9 @@
   <%= @event.duration %>
 </p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to @event.starts_at.to_s, year_month_day_path(@event.day.year, @event.day.month, @event.day) %>
+<%= render(Events::EditLinkComponent.new(event: @event, time_range: @time_range)) do %>
+  Edit
+<% end %> |
+<%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
+  Done
+<% end %>

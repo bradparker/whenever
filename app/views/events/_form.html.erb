@@ -26,6 +26,8 @@
     <%= form.number_field :duration %>
   </div>
 
+  <%= form.hidden_field :time_range, value: TimeRange.name(@time_range) %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

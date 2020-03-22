@@ -3,8 +3,11 @@
 require "forwardable"
 
 class Day
-  extend Forwardable
+  def self.from_date(date, event_range = nil)
+    new(date.year, date.month, date.day, event_range)
+  end
 
+  extend Forwardable
   def_delegators :month, :year
 
   attr_reader :month, :value
@@ -15,22 +18,20 @@ class Day
     @event_range = event_range
   end
 
-  def week
-    Week.new(starts_at.cwyear, starts_at.cweek)
+  def starts_at
+    Date.new(year.value, month.value, value)
   end
 
   def prev
-    prev_starts_at = starts_at - 1.day
-    Day.new(prev_starts_at.year, prev_starts_at.month, prev_starts_at.day)
+    Day.from_date(starts_at.prev_day)
   end
 
   def next
-    next_starts_at = starts_at + 1.day
-    Day.new(next_starts_at.year, next_starts_at.month, next_starts_at.day)
+    Day.from_date(starts_at.next_day)
   end
 
-  def starts_at
-    Date.new(year.value, month.value, value)
+  def week
+    Week.new(starts_at.cwyear, starts_at.cweek)
   end
 
   def events
