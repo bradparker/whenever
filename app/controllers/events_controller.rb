@@ -18,14 +18,14 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    time_range = TimeRange.from_date(
+    @time_range = TimeRange.from_date(
       name: params.dig(:event, :time_range),
       date: @event.starts_at.to_date,
     )
 
     if @event.save
       redirect_to(
-        event_urls(@event, time_range).path,
+        event_urls(@event, @time_range).path,
         notice: "Event was successfully created.",
       )
     else
@@ -34,13 +34,14 @@ class EventsController < ApplicationController
   end
 
   def update
-    time_range = TimeRange.from_date(
+    @time_range = TimeRange.from_date(
       name: params.dig(:event, :time_range),
       date: @event.starts_at.to_date,
     )
+
     if @event.update(event_params)
       redirect_to(
-        event_urls(@event, time_range).path,
+        event_urls(@event, @time_range).path,
         notice: "Event was successfully updated.",
       )
     else
@@ -70,7 +71,7 @@ class EventsController < ApplicationController
   end
 
   def set_time_range
-    @time_range = TimeRange.from_date(
+    @time_range ||= TimeRange.from_date(
       name: params[:time_range],
       date: @event.starts_at.to_date,
     )
