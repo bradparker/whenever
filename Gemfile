@@ -31,4 +31,6 @@ end
 group :test do
   gem "degenerate", "~> 0.0.3"
   gem "generative", "~> 0.2.4"
+  gem "rails-controller-testing", "~> 1.0"
+  gem "timecop", "~> 0.9.1"
 end

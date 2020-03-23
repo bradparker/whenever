@@ -4,18 +4,14 @@ class Events::EditLinkComponent < ViewComponent::Base
     @time_range = time_range
   end
 
-  def path
-    urls.edit_path
+  def edit_path
+    Events::Paths.new(
+      id: event.id,
+      time_range: time_range,
+    ).edit_path
   end
 
   private
 
   attr_reader :event, :time_range
-
-  def urls
-    @urls ||= Events::Urls.new(
-      id: event.id,
-      time_range: time_range,
-    )
-  end
 end

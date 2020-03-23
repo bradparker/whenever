@@ -5,17 +5,13 @@ class Events::LinkComponent < ViewComponent::Base
   end
 
   def path
-    urls.path
+    Events::Paths.new(
+      id: event.id,
+      time_range: time_range,
+    ).path
   end
 
   private
 
   attr_reader :event, :time_range
-
-  def urls
-    @urls ||= Events::Urls.new(
-      id: event.id,
-      time_range: time_range,
-    )
-  end
 end

@@ -28,7 +28,7 @@ class Week
 
   def days
     @days ||= starts_at.all_week.map do |date|
-      Day.new(date.year, date.month, date.day, event_range)
+      Day.from_date(date, event_range)
     end
   end
 

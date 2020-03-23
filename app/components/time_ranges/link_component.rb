@@ -4,14 +4,10 @@ class TimeRanges::LinkComponent < ViewComponent::Base
   end
 
   def path
-    urls.path
+    TimeRanges::Paths.new(time_range).path
   end
 
   private
 
   attr_reader :time_range
-
-  def urls
-    @urls ||= TimeRanges::Urls.new(time_range)
-  end
 end

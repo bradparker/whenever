@@ -1,4 +1,4 @@
-class Events::Urls
+class Events::Paths
   include Rails.application.routes.url_helpers
 
   def initialize(

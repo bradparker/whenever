@@ -1,27 +1,24 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[show edit update destroy]
-  before_action :set_time_range, only: %i[show edit destroy]
-
-  def show; end
-
-  def new
-    @event = Event.new(starts_at: Time.parse(params[:starts_at]))
-    @time_range = TimeRange.from_date(
-      name: params[:time_range],
-      date: @event.starts_at.to_date,
-    )
+  def show
+    @event = Event.find(params[:id])
+    @time_range = @event.time_range(time_range_name)
   end
 
-  def edit; end
+  def new
+    @event = Event.new(starts_at: starts_at)
+    @time_range = @event.time_range(time_range_name)
+  end
+
+  def edit
+    @event = Event.find(params[:id])
+    @time_range = @event.time_range(time_range_name)
+  end
 
   def create
     @event = Event.new(event_params)
-    @time_range = TimeRange.from_date(
-      name: params.dig(:event, :time_range),
-      date: @event.starts_at.to_date,
-    )
+    @time_range = @event.time_range(time_range_name)
 
     if @event.save
       redirect_to(
@@ -34,14 +31,12 @@ class EventsController < ApplicationController
   end
 
   def update
-    @time_range = TimeRange.from_date(
-      name: params.dig(:event, :time_range),
-      date: @event.starts_at.to_date,
-    )
+    @event = Event.find(params[:id])
+    @time_range = @event.time_range(time_range_name)
 
     if @event.update(event_params)
       redirect_to(
-        event_urls(@event, @time_range).path,
+        event_path(@event, @time_range),
         notice: "Event was successfully updated.",
       )
     else
@@ -50,38 +45,38 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    @event = Event.find(params[:id])
+    @time_range = @event.time_range(time_range_name)
+
     @event.destroy
     redirect_to(
-      time_range_urls(@event).path,
+      time_range_path(@time_range),
       notice: "Event was successfully destroyed.",
     )
   end
 
   private
 
-  def set_event
-    @event = Event.find(params[:id])
+  def starts_at
+    if params[:starts_at].present?
+      Time.parse(params[:starts_at]).utc
+    else
+      Time.now.utc
+    end
   end
 
-  def event_urls(event, time_range)
-    Events::Urls.new(
-      id: event.id,
-      time_range: time_range,
-    )
+  def time_range_name
+    params[:time_range]&.to_sym ||
+      params.dig(:event, :time_range)&.to_sym ||
+      :day
   end
 
-  def set_time_range
-    @time_range ||= TimeRange.from_date(
-      name: params[:time_range],
-      date: @event.starts_at.to_date,
-    )
+  def event_path(event, time_range)
+    Events::Paths.new(id: event.id, time_range: time_range).path
   end
 
-  def time_range_urls(event)
-    TimeRanges::Urls.new(TimeRange.from_date(
-      name: params[:time_range],
-      date: event.starts_at.to_date,
-    ))
+  def time_range_path(time_range)
+    TimeRanges::Paths.new(time_range).path
   end
 
   def event_params
