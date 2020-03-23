@@ -58,8 +58,9 @@ class EventsController < ApplicationController
   private
 
   def starts_at
-    if params[:starts_at].present?
-      Time.parse(params[:starts_at]).utc
+    param_value = params.dig(:event, :starts_at)
+    if param_value.present?
+      Time.parse(param_value).utc
     else
       Time.now.utc
     end

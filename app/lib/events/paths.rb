@@ -12,7 +12,9 @@ class Events::Paths
   def new_path
     new_event_path(
       time_range: time_range_name,
-      starts_at: time_range.starts_at.to_time(:utc)
+      event: {
+        starts_at: time_range.starts_at.to_time(:utc)
+      }
     )
   end
 

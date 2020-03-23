@@ -16,9 +16,13 @@ RSpec.describe EventsController, type: :controller do
       end
     end
 
-    it "sets the time range based on the starts_at param" do
-      get :new, params: { starts_at: Time.utc(2020, 03, 03, 03) }
-      expect(assigns(:time_range)).to eq( Day.new(2020, 03, 03))
+    it "sets the time range based on the event[starts_at] param" do
+      get :new, params: {
+        event: {
+          starts_at: Time.utc(2020, 03, 03, 03)
+        }
+      }
+      expect(assigns(:time_range)).to eq(Day.new(2020, 03, 03))
     end
 
     it "sets the time range type based on the time_range param" do
