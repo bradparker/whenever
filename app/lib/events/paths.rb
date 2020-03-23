@@ -2,35 +2,31 @@ class Events::Paths
   include Rails.application.routes.url_helpers
 
   def initialize(
-    id: nil,
-    time_range: TimeRange.from_date(date: Date.today)
+    event:,
+    time_range: :day
   )
-    @id = id
+    @event = event
     @time_range = time_range
   end
 
   def new_path
     new_event_path(
-      time_range: time_range_name,
+      time_range: time_range,
       event: {
-        starts_at: time_range.starts_at.to_time(:utc)
+        starts_at: event.starts_at
       }
     )
   end
 
   def path
-    event_path(id, time_range: time_range_name)
+    event_path(event, time_range: time_range)
   end
 
   def edit_path
-    edit_event_path(id, time_range: time_range_name)
+    edit_event_path(event, time_range: time_range)
   end
 
   private
 
-  attr_reader :id, :time_range
-
-  def time_range_name
-    TimeRange.name(time_range)
-  end
+  attr_reader :event, :time_range
 end

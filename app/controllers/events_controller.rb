@@ -7,7 +7,10 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new(starts_at: starts_at)
+    @event = Event.new(
+      starts_at: starts_at,
+      ends_at: starts_at + 1.hour
+    )
     @time_range = @event.time_range(time_range_name)
   end
 
@@ -22,7 +25,7 @@ class EventsController < ApplicationController
 
     if @event.save
       redirect_to(
-        event_urls(@event, @time_range).path,
+        event_path(@event, @time_range),
         notice: "Event was successfully created.",
       )
     else
@@ -73,7 +76,7 @@ class EventsController < ApplicationController
   end
 
   def event_path(event, time_range)
-    Events::Paths.new(id: event.id, time_range: time_range).path
+    Events::Paths.new(event: event, time_range: time_range_name).path
   end
 
   def time_range_path(time_range)

@@ -6,8 +6,8 @@ class Events::LinkComponent < ViewComponent::Base
 
   def path
     Events::Paths.new(
-      id: event.id,
-      time_range: time_range,
+      event: event,
+      time_range: TimeRange.name(time_range),
     ).path
   end
 
