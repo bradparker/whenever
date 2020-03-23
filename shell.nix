@@ -7,6 +7,7 @@ nixpkgs.mkShell {
     nodejs
     postgresql
     ruby
+    yarn
     zlib
   ];
   shellHook = ''
