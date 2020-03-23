@@ -7,12 +7,7 @@ RSpec.describe EventsController, type: :controller do
     it "defaults the time range to all day today" do
       Timecop.freeze(Time.utc(2020, 02, 02, 02)) do
         get :new
-        expect(assigns(:time_range)).to eq(
-          TimeRange.from_date(
-            name: :day,
-            date: Date.new(2020, 02, 02),
-          )
-        )
+        expect(assigns(:time_range)).to eq(Day.new(2020, 02, 02))
       end
     end
 
