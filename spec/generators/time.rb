@@ -10,7 +10,7 @@ module TimeGenerator
       min: options.fetch(:min, TIME_MIN).to_i,
       max: options.fetch(:max, TIME_MAX).to_i,
     })
-    Time.at(integer).utc
+    Time.at(integer.to_i).utc
   end
 end
 
