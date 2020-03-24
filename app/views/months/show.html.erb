@@ -37,22 +37,22 @@
 </p>
 
 <ul>
-  <% @month.weeks.each do |week| %>
+  <% @month.days_by_week.each do |week, days| %>
     <li>
       <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
         <%= render(Weeks::LongNameComponent.new(week: week)) %>
       <% end %>
-    </li>
-    <ul>
-      <% week.days.each do |day| %>
-        <li>
-          <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-            <%= day.value.to_s %>
-          <% end %>
+      <ul>
+        <% days.each do |day| %>
+          <li>
+            <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
+              <%= day.value.to_s %>
+            <% end %>
 
-          <%= day.event_count %>
-        </li>
-      <% end %>
-    </ul>
+            <%= day.event_count %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
   <% end %>
 </ul>

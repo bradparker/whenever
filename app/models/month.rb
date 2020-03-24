@@ -32,6 +32,16 @@ class Month
     end
   end
 
+  def days
+    @days ||= starts_at.all_month.map do |date|
+      Day.from_date(date)
+    end
+  end
+
+  def days_by_week
+    days.group_by(&:week).entries
+  end
+
   def to_param
     value.to_s.rjust(2, "0")
   end

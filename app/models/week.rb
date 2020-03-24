@@ -28,14 +28,26 @@ class Week
     Month.from_date(starts_at)
   end
 
-  def months
-    days.map(&:month).uniq
-  end
-
   def days
     @days ||= starts_at.all_week.map do |date|
       Day.from_date(date, event_range)
     end
+  end
+
+  def days_by_month
+    days.group_by(&:month).entries
+  end
+
+  def eql?(other)
+    year == other.year && value == other.value
+  end
+
+  def ==(other)
+    eql?(other)
+  end
+
+  def hash
+    year.hash ^ value.hash
   end
 
   def to_param

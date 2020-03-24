@@ -1,12 +1,10 @@
 <nav>
   <ul>
-    <% @week.months.each do |month| %>
-      <li>
-        <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
-          <%= render(Months::LongNameComponent.new(month: month)) %>
-        <% end %>
-      </li>
-    <% end %>
+    <li>
+      <%= render(TimeRanges::LinkComponent.new(time_range: @week.year)) do %>
+        <%= @week.year.value %>
+      <% end %>
+    </li>
   </ul>
 </nav>
 
@@ -35,61 +33,70 @@
 </nav>
 
 <p>
-  <%= render(Events::NewLinkComponent.new(time_range: @week)) do %>
-    New Event
-  <% end %>
+<%= render(Events::NewLinkComponent.new(time_range: @week)) do %>
+  New Event
+<% end %>
 </p>
 
 <ul>
-  <% @week.days.each do |day| %>
+  <% @week.days_by_month.each do |month, days| %>
     <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-        <%= day.value.to_s %>
+      <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
+        <%= render(Months::LongNameComponent.new(month: month)) %>
       <% end %>
+      <ul>
+        <% days.each do |day| %>
+          <li>
+            <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
+              <%= day.value.to_s %>
+            <% end %>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Starts at</th>
-            <th>Ends at</th>
-            <th colspan="2"></th>
-          </tr>
-        </thead>
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Starts at</th>
+                  <th>Ends at</th>
+                  <th colspan="2"></th>
+                </tr>
+              </thead>
 
-        <tbody>
-          <% day.events.each do |event| %>
-            <tr>
-              <td>
-                <%= render(Events::LinkComponent.new(
-                  event: event,
-                  time_range: @week
-                )) do %>
-                  <%= event.title %>
+              <tbody>
+                <% day.events.each do |event| %>
+                  <tr>
+                    <td>
+                      <%= render(Events::LinkComponent.new(
+                        event: event,
+                        time_range: @week,
+                      )) do %>
+                      <%= event.title %>
+                    <% end %>
+                    </td>
+                    <td><%= event.starts_at %></td>
+                    <td><%= event.ends_at %></td>
+                    <td>
+                      <%= render(Events::EditLinkComponent.new(
+                        event: event,
+                        time_range: @week,
+                      )) do %>
+                      Edit
+                    <% end %>
+                    </td>
+                    <td>
+                      <%= render(Events::DestroyComponent.new(
+                        event: event,
+                        time_range: @week,
+                      )) do %>
+                      Destroy
+                    <% end %>
+                    </td>
+                  </tr>
                 <% end %>
-              </td>
-              <td><%= event.starts_at %></td>
-              <td><%= event.ends_at %></td>
-              <td>
-                <%= render(Events::EditLinkComponent.new(
-                  event: event,
-                  time_range: @week
-                )) do %>
-                  Edit
-                <% end %>
-              </td>
-              <td>
-                <%= render(Events::DestroyComponent.new(
-                  event: event,
-                  time_range: @week
-                )) do %>
-                  Destroy
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+              </tbody>
+            </table>
+          </li>
+        <% end %>
+        </ul>
     </li>
   <% end %>
 </ul>
