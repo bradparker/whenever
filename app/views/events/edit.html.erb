@@ -1,13 +1,11 @@
 <h1>Editing Event</h1>
 
-<%= render 'form', event: @event %>
+<%= render(Events::FormComponent.new(event: @event, time_range: @time_range)) %>
 
-<%= render(Events::LinkComponent.new(
-  event: @event,
-  time_range: @time_range
-)) do %>
+<%= render(Events::LinkComponent.new(event: @event, time_range: @time_range)) do %>
   Back to event
-<% end %> |
+<% end %>
+|
 <%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
   Back to <%= @time_range.name %>
 <% end %>

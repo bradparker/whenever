@@ -9,6 +9,14 @@ class Events::Paths
     @time_range = time_range
   end
 
+  def form_path
+    if event.persisted?
+      path
+    else
+      events_path(time_range: time_range)
+    end
+  end
+
   def new_path
     new_event_path(
       time_range: time_range,

@@ -1,6 +1,6 @@
 <h1>New Event</h1>
 
-<%= render 'form', event: @event %>
+<%= render(Events::FormComponent.new(event: @event, time_range: @time_range)) %>
 
 <%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
   Cancel
