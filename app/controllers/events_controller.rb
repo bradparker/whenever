@@ -70,7 +70,7 @@ class EventsController < ApplicationController
   end
 
   def time_range_name
-    params[:time_range]&.to_sym || :day
+    params[:time_range_name]&.to_sym || :day
   end
 
   def event_path(event, time_range)

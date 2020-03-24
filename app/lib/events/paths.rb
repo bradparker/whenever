@@ -13,13 +13,13 @@ class Events::Paths
     if event.persisted?
       path
     else
-      events_path(time_range: time_range)
+      time_range_events_path(time_range)
     end
   end
 
   def new_path
-    new_event_path(
-      time_range: time_range,
+    new_time_range_event_path(
+      time_range,
       event: {
         starts_at: event.starts_at
       }
@@ -27,11 +27,11 @@ class Events::Paths
   end
 
   def path
-    event_path(event, time_range: time_range)
+    time_range_event_path(time_range, event)
   end
 
   def edit_path
-    edit_event_path(event, time_range: time_range)
+    edit_time_range_event_path(time_range, event)
   end
 
   private

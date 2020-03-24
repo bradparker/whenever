@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
-  resources :events, except: [:index]
+  resources(
+    :time_ranges,
+    path: "",
+    param: :name,
+    only: [:show],
+    constraints: {
+      time_range_name: /year|month|week|day/,
+    },
+  ) do
+    resources :events, except: [:index]
+  end
 
   resources :years, path: "", only: [:show], constraints: { id: /\d{4}/ } do
     resources :weeks, only: [:show], constraints: { id: /\d{1,2}/ }
@@ -8,12 +18,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/", to: redirect {
-    now = Time.now
-    year = Year.new(now.year)
-    month = Month.new(now.year, now.month)
-    day = Day.new(now.year, now.month, now.day)
-
-    "/#{year.to_param}/#{month.to_param}/#{day.to_param}"
-  }
+  root to: "time_ranges#show", name: "day"
 end
