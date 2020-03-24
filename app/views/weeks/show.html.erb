@@ -26,6 +26,11 @@
         <%= render(Weeks::LongNameComponent.new(week: @week.next)) %>
       <% end %>
     </li>
+    <li>
+      <%= link_to time_range_path("week") do %>
+        This week
+      <% end %>
+    </li>
   </ul>
 </nav>
 

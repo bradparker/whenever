@@ -9,6 +9,11 @@
   <li>
     <%= link_to @year.next.value, year_path(@year.next) %>
   </li>
+  <li>
+    <%= link_to time_range_path("year") do %>
+      This year
+    <% end %>
+  </li>
 </ul>
 
 <p>

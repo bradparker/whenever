@@ -29,6 +29,11 @@
         <%= @day.next.starts_at.to_s %>
       <% end %>
     </li>
+    <li>
+      <%= link_to time_range_path("day") do %>
+        Today
+      <% end %>
+    </li>
   </ul>
 </nav>
 
