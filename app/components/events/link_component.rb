@@ -7,7 +7,7 @@ class Events::LinkComponent < ViewComponent::Base
   def path
     Events::Paths.new(
       event: event,
-      time_range: TimeRange.name(time_range),
+      time_range: time_range.name,
     ).path
   end
 

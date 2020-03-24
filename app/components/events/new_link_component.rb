@@ -6,17 +6,13 @@ class Events::NewLinkComponent < ViewComponent::Base
   def new_path
     Events::Paths.new(
       event: Event.new(starts_at: starts_at),
-      time_range: time_range_name
+      time_range: time_range.name,
     ).new_path
   end
 
   private
 
   attr_reader :time_range
-
-  def time_range_name
-    TimeRange.name(time_range)
-  end
 
   def starts_at
     now = Time.now.utc

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Month
+  include TimeRange::Naming
+
   def self.from_date(date)
     new(date.year, date.month)
   end

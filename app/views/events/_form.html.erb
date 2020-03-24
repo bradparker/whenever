@@ -1,6 +1,6 @@
 <%= form_with(model: event, local: true) do |form| %>
   <% if event.errors.any? %>
-    <div id="error_explanation">
+    <div id=".namerror_explanation">
       <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
       <ul>
@@ -26,7 +26,7 @@
     <%= form.datetime_select :ends_at %>
   </div>
 
-  <%= form.hidden_field :time_range, value: TimeRange.name(@time_range) %>
+  <%= form.hidden_field :time_range, value: @time_range.name %>
 
   <div class="actions">
     <%= form.submit %>

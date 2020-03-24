@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Year
+  include TimeRange::Naming
+
   def self.from_date(date)
     new(date.year)
   end

@@ -3,6 +3,8 @@
 require "forwardable"
 
 class Day
+  include TimeRange::Naming
+
   def self.from_date(date, event_range = nil)
     new(date.year, date.month, date.day, event_range)
   end

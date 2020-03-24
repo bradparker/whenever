@@ -7,7 +7,7 @@ class Events::EditLinkComponent < ViewComponent::Base
   def edit_path
     Events::Paths.new(
       event: event,
-      time_range: TimeRange.name(time_range),
+      time_range: time_range.name,
     ).edit_path
   end
 

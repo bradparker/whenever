@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Week
+  include TimeRange::Naming
+
   def self.from_date(date)
     new(date.cwyear, date.cweek)
   end

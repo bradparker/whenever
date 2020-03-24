@@ -9,5 +9,5 @@
   Back to event
 <% end %> |
 <%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
-  Back to <%= TimeRange.name(@time_range) %>
+  Back to <%= @time_range.name %>
 <% end %>
