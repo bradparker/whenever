@@ -28,6 +28,10 @@ class Week
     Month.from_date(starts_at)
   end
 
+  def months
+    days.map(&:month).uniq
+  end
+
   def days
     @days ||= starts_at.all_week.map do |date|
       Day.from_date(date, event_range)

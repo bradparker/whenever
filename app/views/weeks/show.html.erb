@@ -1,10 +1,12 @@
 <nav>
   <ul>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: @week.month)) do %>
-        <%= render(Months::LongNameComponent.new(month: @week.month)) %>
-      <% end %>
-    </li>
+    <% @week.months.each do |month| %>
+      <li>
+        <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
+          <%= render(Months::LongNameComponent.new(month: month)) %>
+        <% end %>
+      </li>
+    <% end %>
   </ul>
 </nav>
 
