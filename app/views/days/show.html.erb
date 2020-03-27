@@ -14,19 +14,19 @@
 </nav>
 
 <h1>
-  <%= @day.starts_at.to_s %>
+  <%= render(Days::LongNameComponent.new(day: @day)) %>
 </h1>
 
 <nav>
   <ul>
     <li>
       <%= render(TimeRanges::LinkComponent.new(time_range: @day.prev)) do %>
-        <%= @day.prev.starts_at.to_s %>
+        <%= render(Days::LongNameComponent.new(day: @day.prev)) %>
       <% end %>
     </li>
     <li>
       <%= render(TimeRanges::LinkComponent.new(time_range: @day.next)) do %>
-        <%= @day.next.starts_at.to_s %>
+        <%= render(Days::LongNameComponent.new(day: @day.next)) %>
       <% end %>
     </li>
     <li>
