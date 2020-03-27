@@ -30,14 +30,14 @@
       <% end %>
 
       <ul>
-        <% month.weeks.each do |week| %>
+        <% month.days_by_week.each do |week, days| %>
           <li>
             <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
               <%= render(Weeks::LongNameComponent.new(week: week)) %>
             <% end %>
           </li>
           <ul>
-            <% week.days.each do |day| %>
+            <% days.each do |day| %>
               <li>
                 <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
                   <%= day.value.to_s %>

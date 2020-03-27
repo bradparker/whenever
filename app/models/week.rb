@@ -35,7 +35,7 @@ class Week
   end
 
   def days_by_month
-    days.group_by(&:month).entries
+    days.group_by(&:month)
   end
 
   def eql?(other)

@@ -39,7 +39,7 @@ class Month
   end
 
   def days_by_week
-    days.group_by(&:week).entries
+    days.group_by(&:week)
   end
 
   def to_param
