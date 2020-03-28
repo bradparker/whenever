@@ -1,102 +1,134 @@
-<nav>
-  <ul>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: @week.year)) do %>
-        <%= @week.year.value %>
-      <% end %>
-    </li>
-  </ul>
-</nav>
+<header class="p-6 bg-yellow-400">
+  <nav>
+    <ul>
+      <li>
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: @week.year,
+          class: "hover:text-yellow-700"
+        )) do %>
+          <h2 class="inline-block text-lg leading-none font-bold">
+            <%= @week.year.value %>
+          </h2>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
 
-<h1>
-  <%= render(Weeks::LongNameComponent.new(week: @week)) %>
-</h1>
+  <h1 class="text-5xl leading-none font-medium pt-2 pb-3">
+    Week <%= @week.value %>
+  </h1>
 
-<nav>
-  <ul>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: @week.prev)) do %>
+  <nav>
+    <ul class="flex">
+      <li>
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: @week.prev,
+          class: "inline-block py-2 pl-2 pr-4 rounded-full bg-yellow-500 flex leading-none items-center"
+        )) do %>
+        <i class="font-bold leading-3 flex bg-yellow-600 rounded-full mr-2 h-8 w-8 items-center justify-center text-lg">
+          &larr;
+        </i>
         <%= render(Weeks::LongNameComponent.new(week: @week.prev)) %>
       <% end %>
-    </li>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: @week.next)) do %>
+      </li>
+      <li class="ml-2">
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: @week.next,
+          class: "py-2 pr-2 pl-4 rounded-full bg-yellow-500 flex leading-none items-center"
+        )) do %>
         <%= render(Weeks::LongNameComponent.new(week: @week.next)) %>
+        <i class="flex bg-yellow-600 rounded-full ml-2 h-8 w-8 items-center justify-center not-italic text-lg">
+          &rarr;
+        </i>
       <% end %>
-    </li>
-    <li>
-      <%= link_to time_range_path("week") do %>
+      </li>
+      <li class="ml-2 pl-2 border-yellow-500 border-solid border-l">
+        <%= link_to(
+          time_range_path("week"),
+          class: "inline-block py-2 pl-2 pr-4 rounded-full bg-yellow-500 flex leading-none items-center"
+        ) do %>
+        <i class="flex bg-yellow-600 rounded-full mr-2 h-8 w-8 items-center justify-center not-italic text-lg">
+          =
+        </i>
+
         This week
       <% end %>
-    </li>
-  </ul>
-</nav>
-
-<p>
-<%= render(Events::NewLinkComponent.new(time_range: @week)) do %>
-  New Event
-<% end %>
-</p>
-
-<ul>
-  <% @week.days_by_month.each do |month, days| %>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
-        <%= render(Months::LongNameComponent.new(month: month)) %>
-      <% end %>
-      <ul>
-        <% days.each do |day| %>
-          <li>
-            <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-              <%= day.value.to_s %>
-            <% end %>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Starts at</th>
-                  <th>Ends at</th>
-                  <th colspan="2"></th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <% day.events.each do |event| %>
-                  <tr>
-                    <td>
-                      <%= render(Events::LinkComponent.new(
-                        event: event,
-                        time_range: @week,
-                      )) do %>
-                      <%= event.title %>
-                    <% end %>
-                    </td>
-                    <td><%= event.starts_at %></td>
-                    <td><%= event.ends_at %></td>
-                    <td>
-                      <%= render(Events::EditLinkComponent.new(
-                        event: event,
-                        time_range: @week,
-                      )) do %>
-                      Edit
-                    <% end %>
-                    </td>
-                    <td>
-                      <%= render(Events::DestroyComponent.new(
-                        event: event,
-                        time_range: @week,
-                      )) do %>
-                      Destroy
-                    <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </li>
+      </li>
+      <li class="ml-2 pl-2 border-yellow-500 border-solid border-l">
+        <%= render(Events::NewLinkComponent.new(
+          time_range: @week,
+          class: "py-2 pl-2 pr-4 rounded-full bg-green-600 text-white inline-flex leading-none items-center not-italic"
+        )) do %>
+          <i class="flex bg-green-700 rounded-full mr-2 h-8 w-8 items-center justify-center not-italic text-lg">
+            +
+          </i>
+          New Event
         <% end %>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main class="p-6 h-full">
+  <ul class="flex h-full">
+    <% @week.days_by_month.each_with_index do |(month, days), index| %>
+      <li
+        style="width: <%= (days.length.to_f / 7) * 100 %>%"
+        class="h-full <%= if index == 0 then "ml-0" else "ml-2" end %>"
+      >
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: month
+        )) do %>
+          <h3 class="inline-block text-lg leading-none font-bold pb-4">
+            <%= render(Months::NameComponent.new(month: month)) %>
+          </h3>
+        <% end %>
+        <ul class="flex min-w-full h-full min-h-screen">
+          <% days.each_with_index do |day, index| %>
+            <li
+              style="width: <%= (1 / days.length.to_f) * 100 %>%"
+              class="<%= if index == 0 then "ml-0" else "ml-2" end %> flex flex-col"
+            >
+              <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
+                <h5 class="inline-block leading-none pb-4">
+                  <%= day.value.to_s %>
+                  <%= day.starts_at.strftime("%a") %>
+                </h5>
+              <% end %>
+
+              <ul class="relative h-full">
+                <% day.events.each do |event| %>
+                  <li
+                    style="
+                      top: <%= (
+                       (event.starts_at.hour * 60 + event.starts_at.min).to_f / (24 * 60)
+                      ) * 100 %>%;
+                      min-height: <%= (
+                        ((event.ends_at.hour * 60 + event.ends_at.min) -
+                        (event.starts_at.hour * 60 + event.starts_at.min)).to_f / (24 * 60)
+                      ) * 100 %>%"
+                    class="bg-gray-400 p-2 rounded absolute w-full"
+                  >
+                    <%= render(Events::LinkComponent.new(
+                      event: event,
+                      time_range: @week,
+                    )) do %>
+                      <h6>
+                        <%= event.title %>
+                      </h6>
+                      <div>
+                        <%= event.starts_at.strftime("%H:%M") %>
+                        -
+                        <%= event.ends_at.strftime("%H:%M") %>
+                      </div>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
         </ul>
-    </li>
-  <% end %>
-</ul>
+      </li>
+    <% end %>
+  </ul>
+<main>

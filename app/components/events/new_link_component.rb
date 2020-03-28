@@ -1,6 +1,9 @@
 class Events::NewLinkComponent < ViewComponent::Base
-  def initialize(time_range:)
-    @time_range = time_range
+  attr_reader :classname
+
+  def initialize(props)
+    @time_range = props.fetch(:time_range)
+    @classname = props.fetch(:class, "")
   end
 
   def new_path

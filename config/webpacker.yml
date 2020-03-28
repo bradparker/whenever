@@ -6,11 +6,8 @@ default: &default
   cache_path: tmp/cache/webpacker
   check_yarn_integrity: false
   webpack_compile_output: true
-
   resolved_paths: []
-
   cache_manifest: false
-
   extract_css: true
 
   static_assets_extensions:
@@ -72,5 +69,4 @@ test:
 production:
   <<: *default
   compile: false
-  extract_css: true
   cache_manifest: true
