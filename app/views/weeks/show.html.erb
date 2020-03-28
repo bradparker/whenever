@@ -69,8 +69,8 @@
   </nav>
 </header>
 
-<main class="p-6 h-full">
-  <ul class="flex h-full">
+<main class="p-6 min-h-full">
+  <ul class="flex min-h-full">
     <% @week.days_by_month.each do |month, days| %>
       <li
         style="width: <%= (days.length.to_f / 7) * 100 %>%"
@@ -79,24 +79,32 @@
         <%= render(TimeRanges::LinkComponent.new(
           time_range: month
         )) do %>
-          <h3 class="inline-block text-lg leading-none font-bold pb-4">
+          <h3 class="inline-block text-lg leading-none font-bold">
             <%= render(Months::NameComponent.new(month: month)) %>
           </h3>
         <% end %>
-        <ul class="flex min-w-full h-full min-h-screen">
+        <ul class="flex w-full min-h-full">
           <% days.each do |day| %>
             <li
               style="width: <%= (1 / days.length.to_f) * 100 %>%"
               class="first:ml-0 ml-2 flex flex-col"
             >
-              <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-                <h5 class="inline-block leading-none pb-4">
+              <%= render(TimeRanges::LinkComponent.new(
+                time_range: day,
+                class: "block sticky top-0 py-4 bg-white z-10"
+              )) do %>
+                <h5 class="leading-none">
                   <%= day.value.to_s %>
                   <%= day.starts_at.strftime("%a") %>
                 </h5>
               <% end %>
 
-              <ul class="relative h-full">
+              <ul class="relative" style="height: 48rem">
+                <li class="absolute w-full h-full">
+                  <% 48.times do |n| %>
+                    <hr class="border-gray-200 odd:border-gray-300 border-sold border-b-1  absolute w-full" style="top: <%= n.to_f / 48 * 100 %>%" />
+                  <%end %>
+                </li>
                 <% day.events.each do |event| %>
                   <li
                     style="
@@ -107,20 +115,13 @@
                         ((event.ends_at.hour * 60 + event.ends_at.min) -
                         (event.starts_at.hour * 60 + event.starts_at.min)).to_f / (24 * 60)
                       ) * 100 %>%"
-                    class="bg-gray-400 p-2 rounded absolute w-full"
+                    class="bg-gray-400 p-2 absolute w-full leading-tight"
                   >
                     <%= render(Events::LinkComponent.new(
                       event: event,
                       time_range: @week,
                     )) do %>
-                      <h6>
-                        <%= event.title %>
-                      </h6>
-                      <div>
-                        <%= event.starts_at.strftime("%H:%M") %>
-                        -
-                        <%= event.ends_at.strftime("%H:%M") %>
-                      </div>
+                      <%= event.title %>
                     <% end %>
                   </li>
                 <% end %>

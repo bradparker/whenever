@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="min-h-full">
   <head>
     <title>Whenever</title>
     <%= csrf_meta_tags %>
@@ -10,7 +10,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="flex flex-col">
+  <body class="flex flex-col h-full">
     <%= yield %>
   </body>
 </html>
