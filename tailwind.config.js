@@ -2,6 +2,11 @@ module.exports = {
   theme: {
     extend: {}
   },
-  variants: {},
+  variants: {
+    margin: [
+      "responsive",
+      "first"
+    ]
+  },
   plugins: []
 }

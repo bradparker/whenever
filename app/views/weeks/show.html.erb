@@ -71,10 +71,10 @@
 
 <main class="p-6 h-full">
   <ul class="flex h-full">
-    <% @week.days_by_month.each_with_index do |(month, days), index| %>
+    <% @week.days_by_month.each do |month, days| %>
       <li
         style="width: <%= (days.length.to_f / 7) * 100 %>%"
-        class="h-full <%= if index == 0 then "ml-0" else "ml-2" end %>"
+        class="h-full first:ml-0 ml-2"
       >
         <%= render(TimeRanges::LinkComponent.new(
           time_range: month
@@ -84,10 +84,10 @@
           </h3>
         <% end %>
         <ul class="flex min-w-full h-full min-h-screen">
-          <% days.each_with_index do |day, index| %>
+          <% days.each do |day| %>
             <li
               style="width: <%= (1 / days.length.to_f) * 100 %>%"
-              class="<%= if index == 0 then "ml-0" else "ml-2" end %> flex flex-col"
+              class="first:ml-0 ml-2 flex flex-col"
             >
               <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
                 <h5 class="inline-block leading-none pb-4">
