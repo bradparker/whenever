@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  get "sign_in", to: "sessions#new"
+  get "sign_up", to: "registrations#new"
+
+  resources :registrations, only: [:new]
+  constraints format: :json do
+    resources :registrations, only: [:create, :show], param: :username
+  end
+
+  namespace :authentication, constraints: { format: :json } do
+    resources :challenges, only: [:create]
+    resources :proofs, only: [:create]
+  end
+
   resources :years, path: "", only: [:show], constraints: { id: /\d{4}/ } do
     resources :weeks, only: [:show], constraints: { id: /\d{1,2}/ }
     resources :months, path: "", only: [:show], constraints: { id: /\d{2}/ } do
