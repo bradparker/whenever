@@ -3,8 +3,8 @@
 class Week
   include TimeRange::Naming
 
-  def self.from_date(date)
-    new(date.cwyear, date.cweek)
+  def self.from_date(date, event_range = nil)
+    new(date.cwyear, date.cweek, event_range)
   end
 
   attr_reader :year, :value, :starts_at

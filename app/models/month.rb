@@ -3,8 +3,8 @@
 class Month
   include TimeRange::Naming
 
-  def self.from_date(date)
-    new(date.year, date.month)
+  def self.from_date(date, event_range = nil)
+    new(date.year, date.month, event_range)
   end
 
   attr_reader :year, :value, :starts_at
@@ -34,7 +34,7 @@ class Month
 
   def days
     @days ||= starts_at.all_month.map do |date|
-      Day.from_date(date)
+      Day.from_date(date, event_range)
     end
   end
 

@@ -1,58 +1,57 @@
-<nav>
-  <ul>
-    <li>
-      <%= link_to @month.year.value, year_path(@month.year) %>
-    </li>
-  </ul>
-</nav>
-
-<h1>
-  <%= render(Months::LongNameComponent.new(month: @month)) %>
-</h1>
-
-<nav>
-  <ul>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: @month.prev)) do %>
-        <%= render(Months::LongNameComponent.new(month: @month.prev)) %>
-      <% end %>
-    </li>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: @month.next)) do %>
-        <%= render(Months::LongNameComponent.new(month: @month.next)) %>
-      <% end %>
-    </li>
-    <li>
-      <%= link_to time_range_path("month") do %>
-        This month
-      <% end %>
-    </li>
-  </ul>
-</nav>
-
-<p>
-  <%= render(Events::NewLinkComponent.new(time_range: @month)) do %>
-    New Event
-  <% end %>
-</p>
-
-<ul>
-  <% @month.days_by_week.each do |week, days| %>
-    <li>
-      <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
-        <%= render(Weeks::LongNameComponent.new(week: week)) %>
-      <% end %>
-      <ul>
-        <% days.each do |day| %>
-          <li>
-            <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-              <%= day.value.to_s %>
-            <% end %>
-
-            <%= day.event_count %>
-          </li>
+<header class="p-6 bg-yellow-400 flex flex-wrap items-center">
+  <nav class="w-full mb-3">
+    <ul class="flex text-xl leading-none">
+      <li>
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: @month.year,
+          class: "hover:text-yellow-700 inline-block"
+        )) do %>
+          <%= @month.year.value %>
         <% end %>
-      </ul>
-    </li>
-  <% end %>
-</ul>
+      </li>
+    </ul>
+  </nav>
+
+  <h1 class="text-4xl leading-none font-medium mr-auto">
+    <%= @month.starts_at.strftime("%B") %>
+  </h1>
+
+  <%= render(TimeRanges::NavigationComponent.new(time_range: @month)) %>
+
+  <div class="ml-2 pl-2 border-yellow-500 border-solid border-l">
+    <%= render(Events::NewLinkComponent.new(
+      time_range: @month,
+      class: "p-2 rounded-full bg-green-600 text-white inline-flex leading-none items-center hover:opacity-75 transition-opacity duration-150 ease-in-out"
+    )) do %>
+      <span class="inline-flex bg-green-700 rounded-full mr-2 h-6 w-6 items-center justify-center text-lg">
+        +
+      </span>
+      <span class="h-6 inline-flex items-center pr-3">
+        New Event
+      </span>
+    <% end %>
+  <div>
+</header>
+
+<main class="p-6 min-h-full">
+  <ul class="min-h-full">
+    <% @month.days_by_week.each do |week, days| %>
+      <li>
+        <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
+          <%= render(Weeks::LongNameComponent.new(week: week)) %>
+        <% end %>
+        <ul>
+          <% days.each do |day| %>
+            <li>
+              <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
+                <%= day.value.to_s %>
+              <% end %>
+
+              <%= day.event_count %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</main>

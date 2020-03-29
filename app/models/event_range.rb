@@ -17,8 +17,18 @@ class EventRange
 
   attr_reader :range
 
+  def starts_at
+    @starts_at ||= range.first
+  end
+
+  def ends_at
+    @ends_at ||= range.last.end_of_day
+  end
+
   def scope
-    @scope ||= Event.where(starts_at: range)
+    @scope ||= Event
+      .where(starts_at: starts_at..ends_at)
+      .or(Event.where(ends_at: starts_at..ends_at))
   end
 
   def by_date
