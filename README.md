@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/bradparker/whenever.svg?branch=master)](https://travis-ci.org/bradparker/whenever)
 
-![Screenshot](doc/screenshot.png)
+![Screenshot of week view](doc/screenshot-week.png)
+![Screenshot of day view](doc/screenshot-day.png)
 
 It's a calendar app written in Rails. If you want your world shook I suspect you want to look elsewhere :)
 
