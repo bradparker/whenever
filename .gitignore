@@ -10,4 +10,5 @@
 !/storage/.keep
 /tmp/*
 !/tmp/.keep
+.bundle
 /vendor/bundle

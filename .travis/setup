@@ -4,6 +4,7 @@ set -exuo pipefail
 
 source .travis/envrc
 
+bundle config --local path vendor/bundle
 bundle install
 yarn install
 bundle exec rails db:setup
