@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authorize!
+  skip_before_action :authorize!, except: [:destroy]
 
   def new
   end
@@ -37,6 +37,15 @@ class SessionsController < ApplicationController
       session.update!(verified: true)
       render status: :ok, json: { H_AMK: server_H_AMK }
     end
+  end
+
+  def destroy
+    @session.destroy
+
+    cookies.delete(:SID)
+    cookies.delete(:SM)
+
+    redirect_to(sign_in_path)
   end
 
   private

@@ -39,6 +39,18 @@
         New Event
       </span>
     <% end %>
+  </div>
+
+  <div class="ml-2 pl-2 border-yellow-500 border-solid border-l">
+    <%= link_to(
+      sign_out_path,
+      method: :delete,
+      class: "p-2 rounded-full bg-gray-800 text-white inline-flex leading-none items-center"
+    ) do %>
+      <span class="h-6 inline-flex items-center px-3">
+        Sign out
+      </span>
+    <% end %>
   <div>
 </header>
 

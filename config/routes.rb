@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  get "sign_in", to: "sessions#new"
   get "sign_up", to: "registrations#new"
 
   resources :registrations, only: [:new]
   constraints format: :json do
     resources :registrations, only: [:create, :show], param: :username
   end
+
+  get "sign_in", to: "sessions#new"
+  delete "sign_out", to: "sessions#destroy"
 
   resources :sesssions, only: [:new]
   constraints format: :json do

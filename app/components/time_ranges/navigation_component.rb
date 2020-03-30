@@ -45,7 +45,7 @@ class TimeRanges::NavigationComponent < ViewComponent::Base
     when Month
       range.starts_at.strftime("%B, %Y")
     when Year
-      range.year.to_s
+      range.value.to_s
     end
   end
 end
