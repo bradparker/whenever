@@ -5,8 +5,14 @@ require "forwardable"
 class Day
   include TimeRange::Naming
 
-  def self.from_date(date, event_range = nil)
-    new(date.year, date.month, date.day, event_range)
+  def self.from_date(date, user_id:, event_range: nil)
+    new(
+      date.year,
+      date.month,
+      date.day,
+      user_id: user_id,
+      event_range: event_range,
+    )
   end
 
   extend Forwardable
@@ -14,9 +20,16 @@ class Day
 
   attr_reader :month, :value
 
-  def initialize(year, month, value, event_range = nil)
-    @month = Month.new(year, month)
+  def initialize(
+    year,
+    month,
+    value,
+    user_id:,
+    event_range: nil
+  )
+    @month = Month.new(year, month, user_id: user_id)
     @value = value
+    @user_id = user_id
     @event_range = event_range
   end
 
@@ -25,15 +38,15 @@ class Day
   end
 
   def prev
-    Day.from_date(starts_at.prev_day)
+    Day.from_date(starts_at.prev_day, user_id: user_id)
   end
 
   def next
-    Day.from_date(starts_at.next_day)
+    Day.from_date(starts_at.next_day, user_id: user_id)
   end
 
   def week
-    Week.new(starts_at.cwyear, starts_at.cweek)
+    Week.new(starts_at.cwyear, starts_at.cweek, user_id: user_id)
   end
 
   def events
@@ -62,7 +75,12 @@ class Day
 
   private
 
+  attr_reader :user_id
+
   def event_range
-    @event_range ||= EventRange.new(starts_at.all_day)
+    @event_range ||= EventRange.new(
+      starts_at.all_day,
+      user_id: user_id,
+    )
   end
 end

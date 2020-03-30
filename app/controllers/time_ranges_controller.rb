@@ -6,6 +6,9 @@ class TimeRangesController < ApplicationController
   private
 
   def time_range
-    params[:name].classify.constantize.from_date(Date.today)
+    params[:name].classify.constantize.from_date(
+      Date.today,
+      user_id: current_user.id
+    )
   end
 end

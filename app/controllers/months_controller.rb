@@ -2,7 +2,7 @@
 
 class MonthsController < ApplicationController
   def show
-    @month = Month.new(
+    @month = current_user.month(
       params[:year_id].to_i,
       params[:id].to_i
     )

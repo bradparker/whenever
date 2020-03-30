@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Week do
   def safe_week(year, week)
     begin
-      Week.new(year, week)
+      Week.new(year, week, user_id: "UNKNOWN")
     rescue ArgumentError => e
       if e.message != "invalid date"
         raise e
@@ -41,7 +41,7 @@ RSpec.describe Week do
             max: 9999,
           })
 
-          Week.new(year, 1)
+          Week.new(year, 1, user_id: "UNKNOWN")
         end
 
         it "returns days in the last week and a half in December the previous year, or the first week and a half of January of that year" do
@@ -97,7 +97,7 @@ RSpec.describe Week do
             max: 51,
           })
 
-          Week.new(year, week)
+          Week.new(year, week, user_id: "UNKNOWN")
         end
 
         it "returns days who's year must be equal to the week's year" do

@@ -2,48 +2,56 @@ import { Controller } from "stimulus";
 import { createClient } from "../authentication";
 
 export default class SessionsController extends Controller {
-  async submit (event) {
+  async submit(event) {
     event.preventDefault();
+
+    const authenticityToken = document
+      .querySelector("meta[name=csrf-token]")
+      .getAttribute("content");
     const form = event.target;
-    const authenticityToken = document.querySelector("meta[name=csrf-token]").getAttribute("content");
     const username = form.querySelector("[name='user[username]']").value;
     const password = form.querySelector("[name='user[password]']").value;
 
     const client = await createClient({
       username,
-      password
+      password,
     });
-    const client_A = client.getPublicKey();
 
     const headers = {
       "X-CSRF-Token": authenticityToken,
-      "Content-type": "application/json"
+      "Content-type": "application/json",
     };
 
-    const challengeResponse = await fetch("/authentication/challenges.json", {
+    const sessionResponse = await fetch("/sessions.json", {
       method: "POST",
       headers,
       body: JSON.stringify({
-        challenge: { username, A: client_A }
-      })
+        session: { username, A: client.getPublicKey() },
+      }),
     });
-    const challenge = await challengeResponse.json();
-    console.log(challenge);
 
-    client.setSalt(challenge.salt);
-    client.setServerPublicKey(challenge.B);
-    const client_M = client.getProof();
+    const session = await sessionResponse.json();
 
-    const proofResponse = await fetch("/authentication/proofs.json", {
+    client.setSalt(session.salt);
+    client.setServerPublicKey(session.B);
+
+    const clientProof = client.getProof();
+
+    const proofResponse = await fetch(`/sessions/${session.id}/verify.json`, {
       method: "POST",
       headers,
       body: JSON.stringify({
-        username,
-        M: client_M
-      })
+        proof: { M: clientProof },
+      }),
     });
-    const proof = await proofResponse.json();
-    console.log(proof);
-    console.log(client.checkServerProof(proof.H_AMK));
+
+    const serverProof = await proofResponse.json();
+
+    if (client.checkServerProof(serverProof.H_AMK)) {
+      document.cookie = `SID=${session.id}; path=/; samesite=strict; secure`;
+      document.cookie = `SM=${clientProof}; path=/; samesite=strict; secure`;
+
+      window.location.href = "/";
+    }
   }
 }

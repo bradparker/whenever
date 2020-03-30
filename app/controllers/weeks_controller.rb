@@ -2,7 +2,7 @@
 
 class WeeksController < ApplicationController
   def show
-    @week = Week.new(
+    @week = current_user.week(
       params[:year_id].to_i,
       params[:id].to_i
     )

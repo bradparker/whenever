@@ -2,25 +2,25 @@
 
 class EventsController < ApplicationController
   def show
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @time_range = @event.time_range(time_range_name)
   end
 
   def new
-    @event = Event.new(
+    @event = current_user.events.build(
       starts_at: starts_at,
-      ends_at: starts_at + 1.hour
+      ends_at: starts_at + 1.hour,
     )
     @time_range = @event.time_range(time_range_name)
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @time_range = @event.time_range(time_range_name)
   end
 
   def create
-    @event = Event.new(event_params)
+    @event = current_user.events.build(event_params)
     @time_range = @event.time_range(time_range_name)
 
     if @event.save
@@ -34,7 +34,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @time_range = @event.time_range(time_range_name)
 
     if @event.update(event_params)
@@ -48,7 +48,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @time_range = @event.time_range(time_range_name)
 
     @event.destroy

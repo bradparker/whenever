@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class EventRange
-  def initialize(range)
+  def initialize(range, user_id:)
     @range = range
+    @user_id = user_id
   end
 
   def on(date)
@@ -15,7 +16,7 @@ class EventRange
 
   private
 
-  attr_reader :range
+  attr_reader :user_id, :range
 
   def starts_at
     @starts_at ||= range.first
@@ -27,8 +28,8 @@ class EventRange
 
   def scope
     @scope ||= Event
-      .where(starts_at: starts_at..ends_at)
-      .or(Event.where(ends_at: starts_at..ends_at))
+      .where(user_id: user_id, starts_at: starts_at..ends_at)
+      .or(Event.where(user_id: user_id, ends_at: starts_at..ends_at))
   end
 
   def by_date

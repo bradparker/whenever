@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  belongs_to :user
+
   validate :ends_at_must_be_after_starts_at
 
   def ends_at_must_be_after_starts_at
@@ -10,7 +12,7 @@ class Event < ApplicationRecord
   delegate :week, :month, :year, to: :day
 
   def day
-    Day.from_date(starts_at.to_date)
+    Day.from_date(starts_at.to_date, user_id: user.id)
   end
 
   def time_range(name)

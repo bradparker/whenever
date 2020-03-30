@@ -3,34 +3,44 @@
 class Week
   include TimeRange::Naming
 
-  def self.from_date(date, event_range = nil)
-    new(date.cwyear, date.cweek, event_range)
+  def self.from_date(date, user_id:, event_range: nil)
+    new(
+      date.cwyear,
+      date.cweek,
+      user_id: user_id,
+      event_range: event_range
+    )
   end
 
   attr_reader :year, :value, :starts_at
 
-  def initialize(year, value, event_range = nil)
-    @year = Year.new(year)
+  def initialize(year, value, user_id:, event_range: nil)
+    @year = Year.new(year, user_id: user_id)
     @value = value
     @starts_at = Date.commercial(year, value)
+    @user_id = user_id
     @event_range = event_range
   end
 
   def prev
-    Week.from_date(starts_at.prev_week)
+    Week.from_date(starts_at.prev_week, user_id: user_id)
   end
 
   def next
-    Week.from_date(starts_at.next_week)
+    Week.from_date(starts_at.next_week, user_id: user_id)
   end
 
   def month
-    Month.from_date(starts_at)
+    Month.from_date(starts_at, user_id: user_id)
   end
 
   def days
     @days ||= starts_at.all_week.map do |date|
-      Day.from_date(date, event_range)
+      Day.from_date(
+        date,
+        user_id: user_id,
+        event_range: event_range
+      )
     end
   end
 
@@ -56,7 +66,12 @@ class Week
 
   private
 
+  attr_reader :user_id
+
   def event_range
-    @event_range ||= EventRange.new(starts_at.all_week)
+    @event_range ||= EventRange.new(
+      starts_at.all_week,
+      user_id: user_id
+    )
   end
 end

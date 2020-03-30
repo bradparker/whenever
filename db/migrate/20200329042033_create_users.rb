@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :username, null: false
       t.string :salt, null: false
       t.string :verifier, null: false
-      t.json :proof, null: true
 
       t.timestamps
     end

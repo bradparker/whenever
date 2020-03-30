@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_29_042033) do
+ActiveRecord::Schema.define(version: 2020_03_30_011558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,18 +22,31 @@ ActiveRecord::Schema.define(version: 2020_03_29_042033) do
     t.datetime "ends_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id", null: false
     t.index ["ends_at"], name: "index_events_on_ends_at"
     t.index ["starts_at"], name: "index_events_on_starts_at"
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.boolean "verified", null: false
+    t.json "proof", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+    t.index ["verified"], name: "index_sessions_on_verified"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "username", null: false
     t.string "salt", null: false
     t.string "verifier", null: false
-    t.json "proof"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "events", "users"
+  add_foreign_key "sessions", "users"
 end

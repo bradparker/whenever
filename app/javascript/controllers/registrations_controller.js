@@ -30,7 +30,6 @@ export default class RegistationsController extends Controller {
       body: JSON.stringify(body)
     });
     const result = await response.json();
-
-    console.log(result);
+    window.location.href = "/sign_in";
   }
 }

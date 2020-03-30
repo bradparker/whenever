@@ -7,9 +7,13 @@ Rails.application.routes.draw do
     resources :registrations, only: [:create, :show], param: :username
   end
 
-  namespace :authentication, constraints: { format: :json } do
-    resources :challenges, only: [:create]
-    resources :proofs, only: [:create]
+  resources :sesssions, only: [:new]
+  constraints format: :json do
+    resources :sessions, only: [:create] do
+      member do
+        post "verify"
+      end
+    end
   end
 
   resources :years, path: "", only: [:show], constraints: { id: /\d{4}/ } do

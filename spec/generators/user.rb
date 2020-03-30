@@ -2,19 +2,18 @@ require "generative"
 require "degenerate"
 
 require_relative "time"
-require_relative "user"
 
-class EventGenerator
+class UserGenerator
   def self.call(options = {})
     new(options).call
   end
 
   def call
-    user.events.build(
+    User.new(
       id: id,
-      title: title,
-      starts_at: starts_at,
-      ends_at: ends_at,
+      username: username,
+      salt: salt,
+      verifier: verifier,
       created_at: created_at,
       updated_at: updated_at,
     )
@@ -28,26 +27,23 @@ class EventGenerator
     @options = options
   end
 
-  def user
-    @user ||= options.fetch(:user, Generative.generate(:user))
-  end
-
   def id
     @id ||= options.fetch(:id, SecureRandom.uuid)
   end
 
-  def title
-    @title ||= Generative.generate(:string, options.fetch(:title, {}))
-  end
-
-  def starts_at
-    @starts_at ||= Generative.generate(:time, options.fetch(:starts_at, {}))
-  end
-
-  def ends_at
-    @ends_at ||= Generative.generate(:time, options.fetch(:ends_at, {
-      min: starts_at,
+  def username
+    @username ||= Generative.generate(:string, options.fetch(:username, {
+      of: ('a' .. 'z').to_a,
+      limit: 1000
     }))
+  end
+
+  def salt
+    @salt ||= options.fetch(:salt, SecureRandom.hex(1024))
+  end
+
+  def verifier
+    @verifier ||= options.fetch(:verifier, SecureRandom.hex(1024))
   end
 
   def created_at
@@ -61,4 +57,4 @@ class EventGenerator
   end
 end
 
-Generative.register_generator(:event, EventGenerator)
+Generative.register_generator(:user, UserGenerator)

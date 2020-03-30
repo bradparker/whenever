@@ -9,7 +9,7 @@ RSpec.describe Year do
             min: 0,
             max: 9999,
           })
-          Year.new(year)
+          Year.new(year, user_id: "UNKNOWN")
         end
 
         it "returns the 12 months of the year" do

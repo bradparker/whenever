@@ -3,28 +3,34 @@
 class Year
   include TimeRange::Naming
 
-  def self.from_date(date)
-    new(date.year)
+  def self.from_date(date, user_id:)
+    new(date.year, user_id: user_id)
   end
 
   attr_reader :value, :starts_at
 
-  def initialize(value)
+  def initialize(value, user_id:)
     @value = value
     @starts_at = Date.new(value.to_i)
+    @user_id = user_id
   end
 
   def prev
-    Year.new(value - 1)
+    Year.new(value - 1, user_id: user_id)
   end
 
   def next
-    Year.new(value + 1)
+    Year.new(value + 1, user_id: user_id)
   end
 
   def months
     @months ||= (1..12).map do |month|
-      Month.new(value, month, event_range)
+      Month.new(
+        value,
+        month,
+        user_id: user_id,
+        event_range: event_range
+      )
     end
   end
 
@@ -46,7 +52,12 @@ class Year
 
   private
 
+  attr_reader :user_id
+
   def event_range
-    @event_range ||= EventRange.new(starts_at.all_year)
+    @event_range ||= EventRange.new(
+      starts_at.all_year,
+      user_id: user_id
+    )
   end
 end

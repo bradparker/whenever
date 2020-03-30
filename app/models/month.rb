@@ -3,38 +3,40 @@
 class Month
   include TimeRange::Naming
 
-  def self.from_date(date, event_range = nil)
-    new(date.year, date.month, event_range)
+  def self.from_date(date, user_id:, event_range: nil)
+    new(
+      date.year,
+      date.month,
+      user_id: user_id,
+      event_range: event_range,
+    )
   end
 
   attr_reader :year, :value, :starts_at
 
-  def initialize(year, value, event_range = nil)
-    @year = Year.new(year)
+  def initialize(year, value, user_id:, event_range: nil)
+    @year = Year.new(year, user_id: user_id)
     @value = value
     @starts_at = Date.new(year, value)
+    @user_id = user_id
     @event_range = event_range
   end
 
   def prev
-    Month.from_date(starts_at.prev_month)
+    Month.from_date(starts_at.prev_month, user_id: user_id)
   end
 
   def next
-    Month.from_date(starts_at.next_month)
-  end
-
-  def weeks
-    @weeks ||= starts_at.all_month.map { |day|
-      [day.cwyear, day.cweek]
-    }.uniq.map do |year, week|
-      Week.new(year, week, event_range)
-    end
+    Month.from_date(starts_at.next_month, user_id: user_id)
   end
 
   def days
     @days ||= starts_at.all_month.map do |date|
-      Day.from_date(date, event_range)
+      Day.from_date(
+        date,
+        user_id: user_id,
+        event_range: event_range,
+      )
     end
   end
 
@@ -60,7 +62,12 @@ class Month
 
   private
 
+  attr_reader :user_id
+
   def event_range
-    @event_range ||= EventRange.new(starts_at.all_month)
+    @event_range ||= EventRange.new(
+      starts_at.all_month,
+      user_id: user_id,
+    )
   end
 end
