@@ -1,19 +1,9 @@
 module.exports = {
   theme: {
-    extend: {}
+    extend: {},
   },
   variants: {
-    borderColor: [
-      "responsive",
-      "even",
-      "odd",
-      "hover",
-      "focus"
-    ],
-    margin: [
-      "responsive",
-      "first"
-    ]
+    textColor: ["responsive", "even", "odd", "hover", "focus"],
   },
-  plugins: []
-}
+  plugins: [],
+};

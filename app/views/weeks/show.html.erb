@@ -1,4 +1,4 @@
-<header class="p-6 bg-yellow-400 flex flex-wrap items-center">
+<header class="p-6 bg-yellow-400 flex flex-wrap items-center text-sm">
   <nav class="w-full mb-3">
     <ul class="flex text-xl leading-none">
       <li>
@@ -45,67 +45,70 @@
   <div>
 </header>
 
-<main class="p-6 min-h-full">
-  <ul class="flex min-h-full">
+<main class="p-6">
+  <section
+    class="grid"
+    style="
+      grid-template-columns: 4rem repeat(7, 1fr);
+      grid-template-rows: auto auto 1fr;
+    "
+  >
+    <div
+      class="
+        row-start-3
+        col-start-1
+        p-2
+      "
+    >
+      <%= render(Days::TimeMeasureComponent.new) %>
+    </div>
+
     <% @week.days_by_month.each do |month, days| %>
-      <li
-        style="width: <%= (days.length.to_f / 7) * 100 %>%"
-        class="h-full first:ml-0 ml-2"
+      <h2
+        class="
+          row-start-1
+          col-start-<%= days.first.starts_at.cwday + 1 %>
+          p-2
+          text-lg
+          font-bold
+        "
       >
         <%= render(TimeRanges::LinkComponent.new(
           time_range: month
         )) do %>
-          <h3 class="inline-block text-xl leading-none font-bold">
-            <%= render(Months::NameComponent.new(month: month)) %>
-          </h3>
+          <%= render(Months::NameComponent.new(month: month)) %>
         <% end %>
-        <ul class="flex w-full min-h-full">
-          <% days.each do |day| %>
-            <li
-              style="width: <%= (1 / days.length.to_f) * 100 %>%"
-              class="first:ml-0 ml-2 flex flex-col"
-            >
-              <%= render(TimeRanges::LinkComponent.new(
-                time_range: day,
-                class: "block sticky top-0 py-4 bg-white z-10"
-              )) do %>
-                <h5 class="leading-none">
-                  <%= day.value.to_s %>
-                  <%= day.starts_at.strftime("%a") %>
-                </h5>
-              <% end %>
-
-              <ul class="relative" style="height: 48rem">
-                <li class="absolute w-full h-full">
-                  <% 48.times do |n| %>
-                    <hr class="border-gray-200 odd:border-gray-300 border-sold border-b-1  absolute w-full" style="top: <%= n.to_f / 48 * 100 %>%" />
-                  <%end %>
-                </li>
-                <% day.events.each do |event| %>
-                  <li
-                    style="
-                      top: <%= (
-                       (event.starts_at.hour * 60 + event.starts_at.min).to_f / (24 * 60)
-                      ) * 100 %>%;
-                      min-height: <%= (
-                        ((event.ends_at.hour * 60 + event.ends_at.min) -
-                        (event.starts_at.hour * 60 + event.starts_at.min)).to_f / (24 * 60)
-                      ) * 100 %>%"
-                    class="bg-gray-400 p-2 absolute w-full leading-tight"
-                  >
-                    <%= render(Events::LinkComponent.new(
-                      event: event,
-                      time_range: @week,
-                    )) do %>
-                      <%= event.title %>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
+      </h2>
+      <% days.each do |day| %>
+        <h3
+          class="
+            sticky
+            top-0
+            z-20
+            row-start-2
+            col-start-<%= day.starts_at.cwday + 1 %>
+            p-2
+            bg-white
+          "
+        >
+          <%= render(TimeRanges::LinkComponent.new(
+            time_range: day,
+          )) do %>
+            <%= day.value.to_s %> <%= day.starts_at.strftime("%a") %>
           <% end %>
-        </ul>
-      </li>
+        </h3>
+
+        <section
+          class="
+            row-start-3
+            col-start-<%= day.starts_at.cwday + 1 %>
+            z-10
+            p-2
+          "
+        >
+          <%= render(Days::TimeLineComponent.new(day: day)) %>
+        </section>
+      <% end %>
     <% end %>
-  </ul>
+  </section>
 <main>

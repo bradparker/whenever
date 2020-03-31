@@ -8,7 +8,7 @@
         <span class="font-bold leading-3 inline-flex bg-yellow-600 rounded-full h-6 w-6 items-center justify-center text-lg">
           &larr;
         </span>
-        <span class="ml-2 pr-3 inline-block">
+        <span class="ml-2 pr-3 hidden md:inline-block">
           <%= prev_range_display_name %>
         </span>
       <% end %>
@@ -19,7 +19,7 @@
         next_range_path,
         class: "p-2 rounded-full bg-yellow-500 inline-flex leading-none items-center hover:opacity-75"
       ) do %>
-        <span class="mr-2 pl-3 inline-block">
+        <span class="mr-2 pl-3 hidden md:inline-block">
           <%= next_range_display_name %>
         </span>
         <span class="inline-flex bg-yellow-600 rounded-full h-6 w-6 items-center justify-center  text-lg transition-opacity duration-150 ease-in-out">
