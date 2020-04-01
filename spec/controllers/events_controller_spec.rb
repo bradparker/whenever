@@ -38,8 +38,6 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET new" do
     it "sets the time range based on the event[starts_at] param" do
-      pending("The verifier produced by SIRP::Client might not be right")
-
       authenticatable_user = Generative.generate(:authenticatable_user)
       authenticatable_user.user.save!
       log_in_authenticable_user(authenticatable_user, cookies)
@@ -64,8 +62,6 @@ RSpec.describe EventsController, type: :controller do
     end
 
     it "sets the time range type based on the time_range param" do
-      pending("The verifier produced by SIRP::Client might not be right")
-
       authenticatable_user = Generative.generate(:authenticatable_user)
       authenticatable_user.user.save!
       log_in_authenticable_user(authenticatable_user, cookies)

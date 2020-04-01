@@ -50,6 +50,7 @@ class AuthenticatableUserGenerator
 
   def user
     @user ||= Generative.generate(:user, options.fetch(:user, {}).merge({
+      username: username,
       verifier: verifier,
       salt: salt
     }))

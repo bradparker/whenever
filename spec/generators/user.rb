@@ -32,8 +32,7 @@ class UserGenerator
   end
 
   def username
-    @username ||= Generative.generate(:string, options.fetch(:username, {
-      of: ('a' .. 'z').to_a,
+    @username ||= options.fetch(:username, Generative.generate(:string, {
       limit: 1000
     }))
   end
