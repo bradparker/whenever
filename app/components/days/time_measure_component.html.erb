@@ -10,7 +10,7 @@
       style="grid-row: <%= [n * 60, 1].max %> / span 59"
       class="text-xs text-gray-500"
     >
-      <%= (beginning_of_day + (n.minutes * 30)).strftime("%H:%M")  %>
+      <%= (beginning_of_day + (n.minutes * 60)).strftime("%H")  %>
     </div>
   <% end %>
 </div>
