@@ -4,6 +4,7 @@ nixpkgs.mkShell {
     bundler
     direnv
     docker-compose
+    heroku
     nodejs
     postgresql
     ruby
