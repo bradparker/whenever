@@ -4,7 +4,7 @@
   <section
     class="grid"
     style="
-      grid-template-columns: 4rem repeat(7, 1fr);
+      grid-template-columns: auto repeat(7, 1fr);
       grid-template-rows: auto auto 1fr;
     "
   >
@@ -23,6 +23,7 @@
         class="
           row-start-1
           col-start-<%= days.first.starts_at.cwday + 1 %>
+          col-span-<%= days.count %>
           p-2
           text-lg
           font-bold
