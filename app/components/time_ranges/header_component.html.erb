@@ -3,14 +3,14 @@
     <%= link_to(
       sign_out_path,
       method: :delete,
-      class: "block p-2 leading-none hover:text-yellow-700 text-sm sm:text-base"
+      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base"
     ) do %>
       Sign out
     <% end %>
   </div>
 
   <nav class="w-full mr-24">
-    <ul class="flex flex-wrap leading-tight sm:text-lg py-2" style="min-height: 2.25rem">
+    <ul class="flex flex-wrap leading-tight sm:text-lg" style="min-height: 1.25rem">
       <% containing_ranges.each do |containing_range| %>
         <li class="mr-3">
           <%= render(TimeRanges::LinkComponent.new(
