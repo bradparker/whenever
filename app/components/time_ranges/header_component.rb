@@ -36,7 +36,7 @@ class TimeRanges::HeaderComponent < ViewComponent::Base
     when Week
       "Week #{range.value}, #{range.year.value}"
     when Month
-      range.starts_at.strftime("%B, %Y")
+      range.starts_at.strftime("%b, %Y")
     when Year
       range.value.to_s
     end
