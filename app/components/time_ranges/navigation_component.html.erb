@@ -1,41 +1,45 @@
 <nav>
   <ul class="flex">
-    <li>
+    <li class="mr-2 py-2">
       <%= link_to(
         prev_range_path,
-        class: "p-2 rounded-full bg-yellow-500 inline-flex leading-none items-center hover:opacity-75 transition-opacity duration-150 ease-in-out"
+        class: "block p-4 rounded-full bg-yellow-500 leading-none hover:bg-yellow-700"
       ) do %>
-        <span class="font-bold leading-3 inline-flex bg-yellow-600 rounded-full h-6 w-6 items-center justify-center text-lg">
+        <span
+          class="relative"
+          style="top: -0.15em"
+        >
           &larr;
         </span>
-        <span class="ml-2 pr-3 hidden md:inline-block">
+        <span class="hidden sm:inline-block">
           <%= prev_range_display_name %>
         </span>
       <% end %>
     </li>
 
-    <li class="ml-2">
+    <li class="mr-2 py-2">
       <%= link_to(
         next_range_path,
-        class: "p-2 rounded-full bg-yellow-500 inline-flex leading-none items-center hover:opacity-75"
+        class: "block p-4 rounded-full bg-yellow-500 leading-none hover:opacity-75"
       ) do %>
-        <span class="mr-2 pl-3 hidden md:inline-block">
+        <span class="hidden sm:inline-block">
           <%= next_range_display_name %>
         </span>
-        <span class="inline-flex bg-yellow-600 rounded-full h-6 w-6 items-center justify-center  text-lg transition-opacity duration-150 ease-in-out">
+        <span
+          class="relative"
+          style="top: -0.15em"
+        >
           &rarr;
         </span>
       <% end %>
     </li>
 
-    <li class="ml-2 pl-2 border-yellow-500 border-solid border-l">
+    <li class="py-2">
       <%= link_to(
         current_range_path,
-        class: "p-2 rounded-full bg-yellow-500 inline-flex leading-none items-center hover:opacity-75 transition-opacity duration-150 ease-in-out"
+        class: "block p-4 rounded-full bg-yellow-500 leading-none hover:opacity-75"
       ) do %>
-        <span class="h-6 inline-flex items-center px-3">
-          <%= current_range_display_name %>
-        </span>
+        <%= current_range_display_name %>
       <% end %>
     </li>
   </ul>
