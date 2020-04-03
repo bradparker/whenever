@@ -12,7 +12,7 @@
       class="
         row-start-3
         col-start-1
-        p-2
+        pr-2
       "
     >
       <%= render(Days::TimeMeasureComponent.new) %>
@@ -59,7 +59,7 @@
             row-start-3
             col-start-<%= day.starts_at.cwday + 1 %>
             z-10
-            p-2
+            px-1
           "
         >
           <%= render(Days::TimeLineComponent.new(day: day)) %>
