@@ -1,5 +1,5 @@
-<header class="p-4 md:p-6 bg-yellow-400 flex flex-wrap items-center relative">
-  <div class="p-4 md:p-6 absolute right-0 top-0">
+<header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center relative">
+  <div class="p-3 md:p-6 absolute right-0 top-0">
     <%= link_to(
       sign_out_path,
       method: :delete,
@@ -10,12 +10,12 @@
   </div>
 
   <nav class="w-full mr-24">
-    <ul class="flex flex-wrap leading-none sm:text-lg" style="min-height: 2.25rem">
+    <ul class="flex flex-wrap leading-tight sm:text-lg py-2" style="min-height: 2.25rem">
       <% containing_ranges.each do |containing_range| %>
         <li class="mr-3">
           <%= render(TimeRanges::LinkComponent.new(
             time_range: containing_range,
-            class: "hover:text-yellow-700 inline-block py-2"
+            class: "hover:text-yellow-700 inline-block"
           )) do %>
             <%= containing_range_name(containing_range) %>
           <% end %>
@@ -30,12 +30,13 @@
 
   <%= render(TimeRanges::NavigationComponent.new(time_range: time_range)) %>
 
-  <div class="p-4 fixed bottom-0 right-0 z-30">
+  <div class="p-3 md:p-6 fixed bottom-0 right-0 z-30">
     <%= render(Events::NewLinkComponent.new(
       time_range: time_range,
-      class: "block p-5 rounded-full bg-green-600 text-white leading-none hover:bg-green-800 text-lg"
+      class: "block p-5 rounded-full bg-green-600 text-white leading-none hover:bg-green-800 text-lg shadow-md"
     )) do %>
-      <span class="text-xl mr-2">+</span> New Event
+      <span class="text-lg inline-flex w-5 h-5 items-center justify-center">+</span>
+      <span class="ml-3 hidden sm:inline-block">New Event</span>
     <% end %>
   </div>
 </header>

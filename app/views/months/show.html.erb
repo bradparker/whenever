@@ -1,6 +1,6 @@
 <%= render(TimeRanges::HeaderComponent.new(time_range: @month)) %>
 
-<main class="p-4 md:p-6">
+<main class="p-3 md:p-6">
   <ul>
     <% @month.days_by_week.each do |week, days| %>
       <li>
