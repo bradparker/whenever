@@ -48,8 +48,8 @@ export default class SessionsController extends Controller {
     const serverProof = await proofResponse.json();
 
     if (client.checkServerProof(serverProof.H_AMK)) {
-      document.cookie = `SID=${session.id}; path=/; samesite=strict; secure`;
-      document.cookie = `SM=${clientProof}; path=/; samesite=strict; secure`;
+      document.cookie = `SID=${session.id}; path=/; samesite=strict`;
+      document.cookie = `SM=${clientProof}; path=/; samesite=strict`;
 
       window.location.href = "/";
     }
