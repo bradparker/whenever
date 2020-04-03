@@ -8,11 +8,11 @@ class TimeRanges::HeaderComponent < ViewComponent::Base
   def display_name
     case time_range
     when Day
-      time_range.starts_at.strftime("%a, %-d")
+      time_range.starts_at.strftime("%A %-d %B %Y")
     when Week
-      "Week #{time_range.value}"
+      "Week #{time_range.value} #{time_range.year.value}"
     when Month
-      time_range.starts_at.strftime("%B")
+      time_range.starts_at.strftime("%B %Y")
     when Year
       time_range.value.to_s
     end
@@ -34,9 +34,11 @@ class TimeRanges::HeaderComponent < ViewComponent::Base
   def containing_range_name(range)
     case range
     when Week
-      "Week #{range.value}, #{range.year.value}"
+      base = "Week #{range.value}"
+      return base + " #{range.year.value}" if range.year != time_range.year
+      base
     when Month
-      range.starts_at.strftime("%b, %Y")
+      range.starts_at.strftime("%B")
     when Year
       range.value.to_s
     end
