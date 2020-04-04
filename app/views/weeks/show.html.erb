@@ -1,6 +1,6 @@
 <%= render(TimeRanges::HeaderComponent.new(time_range: @week)) %>
 
-<main class="p-3 md:p-6 max-w-full overflow-x-auto">
+<main class="p-3 md:p-6">
   <section
     class="grid"
     style="
@@ -42,21 +42,24 @@
           border-gray-200
           border-l
           border-b
+          truncate
         "
       >
         <%= render(TimeRanges::LinkComponent.new(
           time_range: month
         )) do %>
-          <%= render(Months::NameComponent.new(month: month)) %>
+            <%= render(Months::NameComponent.new(month: month)) %>
         <% end %>
       </h2>
       <% days.each do |day| %>
         <h3
           class="
+            sticky
+            top-0
             row-start-2
             col-start-<%= day.starts_at.cwday + 1 %>
             p-2
-            bg-white
+            <%= if day.starts_at == Date.today then "bg-red-600 text-white" else "bg-white" end %>
             text-center
             border-solid
             border-gray-200
@@ -67,10 +70,10 @@
           <%= render(TimeRanges::LinkComponent.new(
             time_range: day,
           )) do %>
-            <span class="block mb-1">
+            <span class="block">
               <%= day.starts_at.strftime("%a").first(2) %>
             </span>
-            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300">
+            <span class="inline-flex items-center justify-center">
               <%= day.value.to_s %>
             </span>
           <% end %>
