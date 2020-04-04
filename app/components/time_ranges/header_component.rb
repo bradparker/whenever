@@ -23,7 +23,7 @@ class TimeRanges::HeaderComponent < ViewComponent::Base
     when Day
       [time_range.month, time_range.week]
     when Week
-      [time_range.year]
+      time_range.months
     when Month
       [time_range.year]
     when Year

@@ -44,6 +44,10 @@ class Week
     end
   end
 
+  def months
+    days.map(&:month).uniq
+  end
+
   def days_by_month
     days.group_by(&:month)
   end

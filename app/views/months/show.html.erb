@@ -1,24 +1,50 @@
 <%= render(TimeRanges::HeaderComponent.new(time_range: @month)) %>
 
-<main class="p-3 md:p-6">
-  <ul>
-    <% @month.days_by_week.each do |week, days| %>
-      <li>
-        <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
-          <%= render(Weeks::LongNameComponent.new(week: week)) %>
-        <% end %>
-        <ul>
-          <% days.each do |day| %>
-            <li>
-              <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-                <%= day.value.to_s %>
-              <% end %>
-
-              <%= day.event_count %>
-            </li>
-          <% end %>
-        </ul>
-      </li>
+<main class="p-3 md:p-6 min-h-full">
+  <section
+    class="grid min-h-full"
+    style="grid-template-columns: auto repeat(7, 1fr)"
+  >
+    <% %w[Mo Tu We Th Fr Sa Su].each_with_index do |day_name, index| %>
+      <div class="row-start-1 col-start-<%= index + 2 %> p-2">
+        <%= day_name %>
+      </div>
     <% end %>
-  </ul>
+    <% @month.days_by_week.each_with_index do |(week, days), index| %>
+      <div
+        class="
+          py-2
+          pr-2
+          row-start-<%= index + 2 %>
+          col-start-1
+          text-sm
+        "
+      >
+        <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
+          <%= week.value.to_s.rjust(2, "0") %>
+        <% end %>
+      </div>
+      <% days.each do |day| %>
+        <div
+          class="
+            p-2
+            row-start-<%= index + 2 %>
+            col-start-<%= day.starts_at.cwday + 1 %>
+            border-sold
+            border-gray-200
+            border-l
+            border-t
+          "
+        >
+          <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
+            <span class="block">
+              <%= day.value.to_s %>
+            </span>
+          <% end %>
+
+          <%= day.event_count %>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
 </main>
