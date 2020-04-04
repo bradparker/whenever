@@ -11,7 +11,7 @@
   <nav class="w-full">
     <ul class="flex flex-wrap leading-tight sm:text-lg">
       <% containing_ranges.each do |containing_range| %>
-        <li class="mr-2 mb-1">
+        <li class="mr-2">
           <%= render(TimeRanges::LinkComponent.new(
             time_range: containing_range,
             class: "hover:bg-yellow-700 hover:text-white inline-block rounded-full leading-none p-3 bg-yellow-500"
