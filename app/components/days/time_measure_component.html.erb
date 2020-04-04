@@ -1,5 +1,5 @@
 <div
-  class="min-h-full grid"
+  class="grid"
   style="
     height: 60rem;
     grid-template-rows: repeat(1440, calc(100% / 1440));
@@ -8,9 +8,11 @@
   <% (1440 / 60).times do |n| %>
     <div
       style="grid-row: <%= [n * 60, 1].max %> / span 59"
-      class="text-xs text-gray-500"
+      class="text-xs text-gray-500 border-solid border-gray-200 border-t"
     >
-      <%= (beginning_of_day + (n.minutes * 60)).strftime("%H")  %>
+      <% if display_numbers? %>
+        <%= (beginning_of_day + (n.minutes * 60)).strftime("%H")  %>
+      <% end %>
     </div>
   <% end %>
 </div>

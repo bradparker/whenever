@@ -4,15 +4,19 @@
   <div
     class="grid"
     style="
-      grid-template-columns: 2rem 1fr;
+      grid-template-columns: auto 1fr;
       grid-gap: 0.5rem;
     "
   >
-    <div class="col-start-1">
+    <div class="col-start-1 pr-2">
       <%= render(Days::TimeMeasureComponent.new) %>
     </div>
 
-    <div class="col-start-2">
+    <div class="col-start-2 col-span-1 row-start-1">
+      <%= render(Days::TimeMeasureComponent.new(display_numbers: false)) %>
+    </div>
+
+    <div class="col-start-2 row-start-1">
       <%= render(Days::TimeLineComponent.new(day: @day)) %>
     </div>
   </div>

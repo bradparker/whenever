@@ -12,10 +12,22 @@
       class="
         row-start-3
         col-start-1
+        col-span-1
         pr-2
       "
     >
       <%= render(Days::TimeMeasureComponent.new) %>
+    </div>
+    <div
+      class="
+        row-start-3
+        col-start-2
+        col-span-7
+      "
+    >
+      <%= render(Days::TimeMeasureComponent.new(
+        display_numbers: false
+      )) %>
     </div>
 
     <% @week.days_by_month.each do |month, days| %>
@@ -24,9 +36,12 @@
           row-start-1
           col-start-<%= days.first.starts_at.cwday + 1 %>
           col-span-<%= days.count %>
-          p-2
-          text-lg
+          p-3
           font-bold
+          border-solid
+          border-gray-200
+          border-l
+          border-b
         "
       >
         <%= render(TimeRanges::LinkComponent.new(
@@ -45,12 +60,22 @@
             col-start-<%= day.starts_at.cwday + 1 %>
             p-2
             bg-white
+            text-center
+            border-solid
+            border-gray-200
+            border-l
+            text-xs
           "
         >
           <%= render(TimeRanges::LinkComponent.new(
             time_range: day,
           )) do %>
-            <%= day.value.to_s %> <%= day.starts_at.strftime("%a") %>
+            <span class="block mb-1">
+              <%= day.starts_at.strftime("%a").first(2) %>
+            </span>
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300">
+              <%= day.value.to_s %>
+            </span>
           <% end %>
         </h3>
 
@@ -60,6 +85,9 @@
             col-start-<%= day.starts_at.cwday + 1 %>
             z-10
             px-1
+            border-solid
+            border-gray-200
+            border-l
           "
         >
           <%= render(Days::TimeLineComponent.new(day: day)) %>

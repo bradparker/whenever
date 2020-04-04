@@ -1,5 +1,5 @@
-<header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center relative">
-  <div class="p-3 md:p-6 absolute right-0 top-0">
+<header class="p-3 md:p-6 bg-gray-800 text-white flex flex-wrap items-center">
+  <div>
     <%= link_to(
       sign_out_path,
       method: :delete,
@@ -8,9 +8,10 @@
       Sign out
     <% end %>
   </div>
-
-  <nav class="w-full mr-24">
-    <ul class="flex flex-wrap leading-tight sm:text-lg" style="min-height: 1.25rem">
+</header>
+<header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center">
+  <nav class="w-full">
+    <ul class="flex flex-wrap leading-tight sm:text-lg">
       <% containing_ranges.each do |containing_range| %>
         <li class="mr-3">
           <%= render(TimeRanges::LinkComponent.new(
