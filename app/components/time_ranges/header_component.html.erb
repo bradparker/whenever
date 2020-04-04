@@ -14,7 +14,7 @@
         <li class="mr-2">
           <%= render(TimeRanges::LinkComponent.new(
             time_range: containing_range,
-            class: "hover:bg-yellow-700 hover:text-white inline-block rounded-full leading-none p-3 bg-yellow-500"
+            class: "hover:bg-yellow-700 hover:text-white inline-block rounded-full leading-none px-3 py-2 bg-yellow-500"
           )) do %>
             <%= containing_range_name(containing_range) %>
           <% end %>

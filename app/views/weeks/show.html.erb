@@ -1,6 +1,6 @@
 <%= render(TimeRanges::HeaderComponent.new(time_range: @week)) %>
 
-<main class="p-3 md:p-6">
+<main class="p-3 md:p-6 max-w-full overflow-x-auto">
   <section
     class="grid"
     style="
@@ -53,9 +53,6 @@
       <% days.each do |day| %>
         <h3
           class="
-            sticky
-            top-0
-            z-20
             row-start-2
             col-start-<%= day.starts_at.cwday + 1 %>
             p-2
@@ -95,4 +92,4 @@
       <% end %>
     <% end %>
   </section>
-<main>
+</main>
