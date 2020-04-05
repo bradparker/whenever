@@ -1,8 +1,9 @@
 class Days::TimeLineComponent < ViewComponent::Base
-  attr_reader :day
+  attr_reader :day, :time_range
 
-  def initialize(day:)
+  def initialize(day:, time_range: day)
     @day = day
+    @time_range = time_range
   end
 
   def grid_row_start(event)

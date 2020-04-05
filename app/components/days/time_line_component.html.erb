@@ -13,7 +13,7 @@
     >
       <%= render(Events::LinkComponent.new(
         event: event,
-        time_range: day,
+        time_range: time_range,
       )) do %>
         <%= event.title %>
       <% end %>

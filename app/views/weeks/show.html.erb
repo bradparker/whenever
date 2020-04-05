@@ -85,7 +85,7 @@
             border-l
           "
         >
-          <%= render(Days::TimeLineComponent.new(day: day)) %>
+          <%= render(Days::TimeLineComponent.new(day: day, time_range: @week)) %>
         </div>
       <% end %>
     <% end %>

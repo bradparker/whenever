@@ -1,23 +1,21 @@
-<nav class="w-full">
-  <ul class="flex flex-wrap leading-tight sm:text-lg">
-    <% containing_ranges.each do |containing_range| %>
-      <li class="mr-2">
-        <%= render(TimeRanges::LinkComponent.new(
-          time_range: containing_range,
-          class: "hover:bg-yellow-700 hover:text-white inline-block rounded-full leading-none px-3 py-2 bg-yellow-500"
-        )) do %>
-          <%= containing_range_name(containing_range) %>
-        <% end %>
-      </li>
+<nav class="w-full flex flex-wrap leading-tight sm:text-lg">
+  <% containing_ranges.each do |containing_range| %>
+    <%= render(TimeRanges::LinkComponent.new(
+      time_range: containing_range,
+      class: "hover:bg-yellow-700 hover:text-white inline-block rounded-full leading-none px-3 py-2 bg-yellow-500 mr-2"
+    )) do %>
+      <%= containing_range_name(containing_range) %>
     <% end %>
-  </ul>
+  <% end %>
 </nav>
 
-<h1 class="text-2xl sm:text-4xl leading-tight font-medium py-3 mr-auto">
+<h1 class="text-2xl sm:text-4xl leading-tight font-medium mt-3 mr-auto">
   <%= display_name %>
 </h1>
 
-<%= render(TimeRanges::NavigationComponent.new(time_range: time_range)) %>
+<nav class="mt-3">
+  <%= render(TimeRanges::NavigationComponent.new(time_range: time_range)) %>
+</nav>
 
 <div class="p-3 md:p-6 fixed bottom-0 right-0 z-30">
   <%= render(Events::NewLinkComponent.new(
