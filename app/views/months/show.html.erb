@@ -38,10 +38,10 @@
           col-start-1
         "
       >
-      <%= render(TimeRanges::LinkComponent.new(
-        time_range: week,
-        class: "block bg-gray-600 text-white text-xs p-1 rounded"
-      )) do %>
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: week,
+          class: "block bg-gray-600 text-white text-xs p-1 rounded"
+        )) do %>
           W<%= week.value.to_s.rjust(2, "0") %>
         <% end %>
       </div>

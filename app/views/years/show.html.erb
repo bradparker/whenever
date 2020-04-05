@@ -12,36 +12,34 @@
     <%= render(TimeRanges::HeaderComponent.new(time_range: @year)) %>
   </header>
 
-  <section class="p-3 md:p-6">
-    <ul>
-      <% @year.months.each do |month| %>
-        <li>
-          <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
-            <%= render(Months::NameComponent.new(month: month)) %>
-          <% end %>
+  <section class="p-3 md:p-6 flex flex-wrap">
+    <% @year.months.each do |month| %>
+      <div
+        class="grid pr-2 pb-2 w-1/2 sm:w-1/3 md:w-1/4"
+        style="
+          flex-basis: auto;
+          grid-template-columns: repeat(7, 1fr);
+          grid-template-rows: auto repeat(<%= month.days_by_week.count %>, 1fr)
+        "
+      >
+        <%= render(TimeRanges::LinkComponent.new(
+          time_range: month,
+          class: "row-start-1 col-span-7 text-lg font-bold py-1"
+        )) do %>
+          <%= month.starts_at.strftime("%B") %>
+        <% end %>
 
-          <ul>
-            <% month.days_by_week.each do |week, days| %>
-              <li>
-                <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
-                  <%= render(Weeks::LongNameComponent.new(week: week)) %>
-                <% end %>
-              </li>
-              <ul>
-                <% days.each do |day| %>
-                  <li>
-                    <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-                      <%= day.value.to_s %>
-                    <% end %>
-
-                    <%= day.event_count %>
-                  </li>
-                <% end %>
-              </ul>
+        <% month.days_by_week.each_with_index do |(_week, days), index| %>
+          <% days.each do |day| %>
+            <%= render(TimeRanges::LinkComponent.new(
+              time_range: day,
+              class: "row-start-#{index + 2} col-start-#{day.starts_at.cwday} text-xs sm:p-1"
+            )) do %>
+              <%= day.value.to_s %>
             <% end %>
-          </ul>
-        </li>
-      <% end %>
-    </ul>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </section>
 </main>
