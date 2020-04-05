@@ -58,12 +58,14 @@
           "
         >
           <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-            <span class="font-bold block mb-2">
+            <span class="block mb-2 <%= if Date.today == day.starts_at then "text-red-600 font-bold" end %>">
               <%= day.value.to_s %>
             </span>
-            <span class="text-xs">
-              <%= day.event_count %>
-            </span>
+            <% if day.event_count > 0 %>
+              <span class="inline-flex text-xs items-center justify-center h-6 w-6 rounded-full bg-gray-200">
+                <%= day.event_count %>
+              </span>
+            <% end %>
           <% end %>
 
         </div>

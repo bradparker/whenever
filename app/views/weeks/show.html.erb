@@ -53,11 +53,12 @@
             row-start-2
             col-start-<%= day.starts_at.cwday + 1 %>
             p-2
-            <%= if day.starts_at == Date.today then "bg-red-600 text-white" else "bg-white" end %>
+            <%= if day.starts_at == Date.today then "text-red-600 font-bold" else "bg-white" end %>
             text-center
             border-solid
             border-gray-200
             border-l
+            border-b
             text-xs
           "
         >

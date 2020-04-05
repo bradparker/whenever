@@ -24,7 +24,7 @@
       >
         <%= render(TimeRanges::LinkComponent.new(
           time_range: month,
-          class: "row-start-1 col-span-7 text-lg font-bold py-1"
+          class: "row-start-1 col-span-7 text-lg font-bold py-1 #{if Date.today.month == month.value then "text-red-600" end}"
         )) do %>
           <%= month.starts_at.strftime("%B") %>
         <% end %>
@@ -33,7 +33,7 @@
           <% days.each do |day| %>
             <%= render(TimeRanges::LinkComponent.new(
               time_range: day,
-              class: "row-start-#{index + 2} col-start-#{day.starts_at.cwday} text-xs sm:p-1"
+              class: "row-start-#{index + 2} col-start-#{day.starts_at.cwday} text-xs sm:p-1 #{if day.starts_at == Date.today then "text-red-600 font-bold" end} #{if day.event_count > 0 then "font-bold" end}"
             )) do %>
               <%= day.value.to_s %>
             <% end %>
