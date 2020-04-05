@@ -7,7 +7,7 @@ class Days::TimeLineComponent < ViewComponent::Base
   end
 
   def grid_row_start(event)
-    ((event.starts_at - event.starts_at.beginning_of_day) / 60).to_i
+    ((event.starts_at - event.starts_at.beginning_of_day) / 60).to_i + 1
   end
 
   def grid_row_span(event)
