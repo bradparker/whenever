@@ -1,34 +1,47 @@
-<%= render(TimeRanges::HeaderComponent.new(time_range: @year)) %>
-
-<main class="p-3 md:p-6">
-  <ul>
-    <% @year.months.each do |month| %>
-      <li>
-        <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
-          <%= render(Months::NameComponent.new(month: month)) %>
-        <% end %>
-
-        <ul>
-          <% month.days_by_week.each do |week, days| %>
-            <li>
-              <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
-                <%= render(Weeks::LongNameComponent.new(week: week)) %>
-              <% end %>
-            </li>
-            <ul>
-              <% days.each do |day| %>
-                <li>
-                  <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-                    <%= day.value.to_s %>
-                  <% end %>
-
-                  <%= day.event_count %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-        </ul>
-      </li>
+<main>
+  <header class="p-3 md:px-6 bg-gray-800 text-white flex flex-wrap items-center">
+    <%= link_to(
+      sign_out_path,
+      method: :delete,
+      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base ml-auto"
+    ) do %>
+      Sign out
     <% end %>
-  </ul>
+  </header>
+  <header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center">
+    <%= render(TimeRanges::HeaderComponent.new(time_range: @year)) %>
+  </header>
+
+  <section class="p-3 md:p-6">
+    <ul>
+      <% @year.months.each do |month| %>
+        <li>
+          <%= render(TimeRanges::LinkComponent.new(time_range: month)) do %>
+            <%= render(Months::NameComponent.new(month: month)) %>
+          <% end %>
+
+          <ul>
+            <% month.days_by_week.each do |week, days| %>
+              <li>
+                <%= render(TimeRanges::LinkComponent.new(time_range: week)) do %>
+                  <%= render(Weeks::LongNameComponent.new(week: week)) %>
+                <% end %>
+              </li>
+              <ul>
+                <% days.each do |day| %>
+                  <li>
+                    <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
+                      <%= day.value.to_s %>
+                    <% end %>
+
+                    <%= day.event_count %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </section>
 </main>

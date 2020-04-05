@@ -1,10 +1,10 @@
 class Days::TimeMeasureComponent < ViewComponent::Base
-  def initialize(display_numbers: true)
-    @display_numbers = display_numbers
-  end
+  attr_reader :col_start, :col_span, :row_start
 
-  def display_numbers?
-    @display_numbers
+  def initialize(row_start: 1, col_start: 1, col_span: 2)
+    @col_start = col_start
+    @col_span = col_span
+    @row_start = row_start
   end
 
   def beginning_of_day

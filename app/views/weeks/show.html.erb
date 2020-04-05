@@ -1,34 +1,28 @@
-<%= render(TimeRanges::HeaderComponent.new(time_range: @week)) %>
+<main
+  class="grid min-h-screen"
+  style="grid-template-rows: auto auto 1fr"
+>
+  <header class="p-3 md:px-6 bg-gray-800 text-white flex flex-wrap items-center">
+    <%= link_to(
+      sign_out_path,
+      method: :delete,
+      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base ml-auto"
+    ) do %>
+      Sign out
+    <% end %>
+  </header>
+  <header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center">
+    <%= render(TimeRanges::HeaderComponent.new(time_range: @week)) %>
+  </header>
 
-<main class="p-3 md:p-6">
   <section
-    class="grid"
+    class="grid p-3 md:p-6"
     style="
       grid-template-columns: auto repeat(7, 1fr);
       grid-template-rows: auto auto 1fr;
     "
   >
-    <div
-      class="
-        row-start-3
-        col-start-1
-        col-span-1
-        pr-2
-      "
-    >
-      <%= render(Days::TimeMeasureComponent.new) %>
-    </div>
-    <div
-      class="
-        row-start-3
-        col-start-2
-        col-span-7
-      "
-    >
-      <%= render(Days::TimeMeasureComponent.new(
-        display_numbers: false
-      )) %>
-    </div>
+    <%= render(Days::TimeMeasureComponent.new(row_start: 3, col_span: 8)) %>
 
     <% @week.days_by_month.each do |month, days| %>
       <h2
@@ -79,7 +73,7 @@
           <% end %>
         </h3>
 
-        <section
+        <div
           class="
             row-start-3
             col-start-<%= day.starts_at.cwday + 1 %>
@@ -91,7 +85,7 @@
           "
         >
           <%= render(Days::TimeLineComponent.new(day: day)) %>
-        </section>
+        </div>
       <% end %>
     <% end %>
   </section>

@@ -1,18 +1,39 @@
 <div
-  class="grid"
+  class="
+    grid
+    col-start-<%= col_start %>
+    row-start-<%= row_start %>
+  "
   style="
-    height: 60rem;
-    grid-template-rows: repeat(1440, calc(100% / 1440));
+    grid-template-rows: repeat(24, calc(100% / 24));
   "
 >
-  <% (1440 / 60).times do |n| %>
+  <% 24.times do |n| %>
     <div
-      style="grid-row: <%= [n * 60, 1].max %> / span 59"
-      class="text-xs text-gray-500 border-solid border-gray-200 border-t"
+      style="grid-row: <%= n + 1 %>"
+      class="text-xs text-gray-500 pr-2"
     >
-      <% if display_numbers? %>
-        <%= (beginning_of_day + (n.minutes * 60)).strftime("%H")  %>
-      <% end %>
+      <%= (beginning_of_day + n.hours).strftime("%H")  %>
+    </div>
+  <% end %>
+</div>
+
+<div
+  class="
+    grid
+    col-start-<%= col_start %>
+    col-span-<%= col_span %>
+    row-start-<%= row_start %>
+  "
+  style="
+    grid-template-rows: repeat(24, calc(100% / 24));
+  "
+>
+  <% 24.times do |n| %>
+    <div
+      style="grid-row: <%= n + 1 %>"
+      class="border-solid border-gray-200 border-t"
+    >
     </div>
   <% end %>
 </div>

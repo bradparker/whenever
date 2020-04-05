@@ -34,11 +34,17 @@ class TimeRanges::HeaderComponent < ViewComponent::Base
   def containing_range_name(range)
     case range
     when Week
-      base = "Week #{range.value}"
-      return base + " #{range.year.value}" if range.year != time_range.year
-      base
+      if time_range.year != range.year
+        "Week #{range.value} #{range.year.value}"
+      else
+        "Week #{range.value}"
+      end
     when Month
-      range.starts_at.strftime("%B")
+      if time_range.year != range.year
+        range.starts_at.strftime("%B %Y")
+      else
+        range.starts_at.strftime("%B")
+      end
     when Year
       range.value.to_s
     end
