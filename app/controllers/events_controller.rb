@@ -7,9 +7,11 @@ class EventsController < ApplicationController
   end
 
   def new
+    starts = starts_at || Time.now.utc
+    ends = ends_at || starts + 1.hour
     @event = current_user.events.build(
-      starts_at: starts_at,
-      ends_at: starts_at + 1.hour,
+      starts_at: starts,
+      ends_at: ends,
     )
     @time_range = @event.time_range(time_range_name)
   end
@@ -20,7 +22,10 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.build(event_params)
+    @event = current_user.events.build(event_params.merge(
+      starts_at: starts_at,
+      ends_at: ends_at
+    ))
     @time_range = @event.time_range(time_range_name)
 
     if @event.save
@@ -37,7 +42,11 @@ class EventsController < ApplicationController
     @event = current_user.events.find(params[:id])
     @time_range = @event.time_range(time_range_name)
 
-    if @event.update(event_params)
+    attributes = event_params.except(:starts_at, :ends_at)
+    attributes[:starts_at] = starts_at if starts_at.present?
+    attributes[:ends_at] = ends_at if ends_at.present?
+
+    if (@event.update(attributes))
       redirect_to(
         event_path(@event, @time_range),
         notice: "Event was successfully updated.",
@@ -61,12 +70,31 @@ class EventsController < ApplicationController
   private
 
   def starts_at
-    param_value = params.dig(:event, :starts_at)
-    if param_value.present?
-      Time.parse(param_value).utc
-    else
-      Time.now.utc
-    end
+    @starts_at ||= begin
+        param_value = params.dig(:event, :starts_at)
+        if param_value.present?
+          case param_value
+          when ActionController::Parameters
+            Time.parse(param_value[:date] + "T" + param_value[:time] + "Z")
+          when String
+            Time.parse(param_value).utc
+          end
+        end
+      end
+  end
+
+  def ends_at
+    @ends_at ||= begin
+        param_value = params.dig(:event, :ends_at)
+        if param_value.present?
+          case param_value
+          when ActionController::Parameters
+            Time.parse(param_value[:date] + "T" + param_value[:time] + "Z")
+          when String
+            Time.parse(param_value).utc
+          end
+        end
+      end
   end
 
   def time_range_name
@@ -82,6 +110,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:title, :starts_at, :ends_at)
+    params.require(:event).permit(:title, starts_at: {}, ends_at: {})
   end
 end

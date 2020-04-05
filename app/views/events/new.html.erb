@@ -1,7 +1,21 @@
-<h1>New Event</h1>
+<main>
+  <header class="p-3 md:px-6 bg-gray-800 text-white flex flex-wrap items-center">
+    <%= link_to(
+      sign_out_path,
+      method: :delete,
+      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base ml-auto"
+    ) do %>
+      Sign out
+    <% end %>
+  </header>
 
-<%= render(Events::FormComponent.new(event: @event, time_range: @time_range)) %>
+  <header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center">
+    <h1 class="text-2xl sm:text-4xl leading-tight font-medium mr-auto">
+      New Event
+    </h1>
+  </header>
 
-<%= render(TimeRanges::LinkComponent.new(time_range: @time_range)) do %>
-  Cancel
-<% end %>
+  <section class="p-3 md:p-6">
+    <%= render(Events::FormComponent.new(event: @event, time_range: @time_range)) %>
+  </section>
+</main>

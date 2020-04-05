@@ -5,7 +5,7 @@
   local: true
 ) do |form| %>
   <% if event.errors.any? %>
-    <div id=".namerror_explanation">
+    <div>
       <h2>
         <%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:
       </h2>
@@ -18,22 +18,53 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+  <label class="block">
+    <span class="block mb-2">
+      Title
+    </span>
+    <input
+      type="text"
+      name="event[title]"
+      value="<%= @event.title %>"
+      class="block w-full border-solid border-gray-400 border p-2 rounded"
+    />
+  </label>
 
-  <div class="field">
-    <%= form.label :starts_at %>
-    <%= form.datetime_select :starts_at %>
-  </div>
+  <label class="block mt-3">
+    <span class="block mb-2 w-full">
+      Start
+    </span>
 
-  <div class="field">
-    <%= form.label :ends_at %>
-    <%= form.datetime_select :ends_at %>
-  </div>
+    <div class="flex">
+      <input name="event[starts_at][date]" type="date" value="<%= event.starts_at.to_date %>" class="block w-full border-solid border-gray-400 border p-2 rounded mr-2" />
+      <input name="event[starts_at][time]" type="time" value="<%= event.starts_at.strftime("%H:%M") %>" class="block w-full border-solid border-gray-400 border p-2 rounded" />
+    </div>
+  </label>
 
-  <div class="actions">
-    <%= form.submit %>
+  <label class="block mt-3">
+    <span class="block mb-2 w-full">
+      Start
+    </span>
+
+    <div class="flex">
+      <input name="event[ends_at][date]" type="date" value="<%= event.ends_at.to_date %>" class="block w-full border-solid border-gray-400 border p-2 rounded mr-2" />
+      <input  name="event[ends_at][time]" type="time" value="<%= event.ends_at.strftime("%H:%M") %>" class="block w-full border-solid border-gray-400 border p-2 rounded" />
+    </div>
+  </label>
+
+  <div class="flex mt-4">
+    <button
+      type="submit"
+      class="p-4 rounded-full bg-green-600 text-white leading-none"
+    >
+      <%= if event.persisted? then "Update event" else "Create event" end %>
+    </button>
+
+    <%= render(TimeRanges::LinkComponent.new(
+      time_range: @time_range,
+      class: "p-4 rounded-full bg-gray-700 text-white ml-auto"
+    )) do %>
+      Cancel
+    <% end %>
   </div>
 <% end %>

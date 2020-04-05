@@ -1,8 +1,8 @@
-<header class="p-6 bg-yellow-400 flex flex-wrap items-center">
-  <h1 class="text-4xl leading-none font-medium mr-auto">
-    Sign up
-  </h1>
-  <div>
+<main>
+  <header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center">
+    <h1 class="text-4xl leading-none font-medium mr-auto">
+      Sign up
+    </h1>
     <%= link_to(
       sign_in_path,
       class: "p-2 rounded-full bg-gray-800 text-white inline-flex leading-none items-center"
@@ -11,43 +11,43 @@
         Sign in
       </span>
     <% end %>
-  <div>
-</header>
+  </header>
 
-<main class="p-6 min-h-full max-w-lg">
-  <form
-    data-controller="registrations"
-    data-action="submit->registrations#submit"
-  >
-    <label class="block">
-      <span class="block mb-2">
-        Username
-      </span>
-      <input
-        type="text"
-        name="user[username]"
-        class="block w-full border-solid border-gray-400 border p-2 rounded"
-      />
-    </label>
-
-    <label class="block mt-3">
-      <span class="block mb-2">
-        Password
-      </span>
-      <input
-        type="password"
-        name="user[password]"
-        class="block w-full border-solid border-gray-400 border p-2 rounded"
-      />
-    </label>
-
-    <button
-      type="submit"
-      class="p-2 rounded-full bg-green-600 text-white flex leading-none items-center mt-4"
+  <section class="p-3 md:p-6">
+    <form
+      data-controller="registrations"
+      data-action="submit->registrations#submit"
     >
-      <span class="h-6 inline-flex items-center px-3">
-        Sign up
-      </span>
-    </button>
-  </form>
+      <label class="block">
+        <span class="block mb-2">
+          Username
+        </span>
+        <input
+          type="text"
+          name="user[username]"
+          class="block w-full border-solid border-gray-400 border p-2 rounded"
+        />
+      </label>
+
+      <label class="block mt-3">
+        <span class="block mb-2">
+          Password
+        </span>
+        <input
+          type="password"
+          name="user[password]"
+          class="block w-full border-solid border-gray-400 border p-2 rounded"
+        />
+      </label>
+
+      <button
+        type="submit"
+        class="p-2 rounded-full bg-green-600 text-white flex leading-none items-center mt-4"
+      >
+        <span class="h-6 inline-flex items-center px-3">
+          Sign up
+        </span>
+      </button>
+    </form>
+  </section>
 </main>
