@@ -30,7 +30,7 @@
     />
   </label>
 
-  <label class="block mt-3">
+  <div class="block mt-3">
     <span class="block mb-2 w-full">
       Start
     </span>
@@ -39,9 +39,9 @@
       <input name="event[starts_at][date]" type="date" value="<%= event.starts_at.to_date %>" class="block w-full border-solid border-gray-400 border p-2 rounded mr-2" />
       <input name="event[starts_at][time]" type="time" value="<%= event.starts_at.strftime("%H:%M") %>" class="block w-full border-solid border-gray-400 border p-2 rounded" />
     </div>
-  </label>
+  </div>
 
-  <label class="block mt-3">
+  <div class="block mt-3">
     <span class="block mb-2 w-full">
       Start
     </span>
@@ -50,7 +50,7 @@
       <input name="event[ends_at][date]" type="date" value="<%= event.ends_at.to_date %>" class="block w-full border-solid border-gray-400 border p-2 rounded mr-2" />
       <input  name="event[ends_at][time]" type="time" value="<%= event.ends_at.strftime("%H:%M") %>" class="block w-full border-solid border-gray-400 border p-2 rounded" />
     </div>
-  </label>
+  </div>
 
   <div class="flex mt-4">
     <button
