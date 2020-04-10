@@ -75,9 +75,9 @@ class EventsController < ApplicationController
       if param_value.present?
         case param_value
         when ActionController::Parameters
-          Time.parse(param_value[:date] + "T" + param_value[:time]).utc
+          Time.zone.parse(param_value[:date] + "T" + param_value[:time]).utc
         when String
-          Time.parse(param_value).utc
+          Time.zone.parse(param_value).utc
         end
       end
     end
@@ -89,9 +89,9 @@ class EventsController < ApplicationController
         if param_value.present?
           case param_value
           when ActionController::Parameters
-            Time.parse(param_value[:date] + "T" + param_value[:time]).utc
+            Time.zone.parse(param_value[:date] + "T" + param_value[:time]).utc
           when String
-            Time.parse(param_value).utc
+            Time.zone.parse(param_value).utc
           end
         end
       end
