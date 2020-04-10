@@ -21,6 +21,14 @@ class Events::FormComponent < ViewComponent::Base
     end
   end
 
+  def starts_at
+    event.starts_at.in_time_zone(time_range.time_zone)
+  end
+
+  def ends_at
+    event.ends_at.in_time_zone(time_range.time_zone)
+  end
+
   private
 
   attr_reader :time_range
