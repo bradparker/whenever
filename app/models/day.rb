@@ -47,7 +47,7 @@ class Day
 
   def current?
     Time.use_zone(time_zone) do
-      Time.now.to_date == starts_at
+      Time.zone.now.to_date == starts_at
     end
   end
 

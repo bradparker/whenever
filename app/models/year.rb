@@ -18,7 +18,7 @@ class Year
 
   def current?
     Time.use_zone(time_zone) do
-      Time.now.beginning_of_year.to_date == starts_at
+      Time.zone.now.beginning_of_year.to_date == starts_at
     end
   end
 
