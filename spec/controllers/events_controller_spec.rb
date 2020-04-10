@@ -47,7 +47,9 @@ RSpec.describe EventsController, type: :controller do
         params: {
           time_range_name: :day,
           event: {
-            starts_at: Time.utc(2020, 03, 03, 03),
+            starts_at: Time.use_zone(authenticatable_user.user.time_zone) do
+              Time.zone.local(2020, 03, 03, 03).utc
+            end
           },
         },
       )
