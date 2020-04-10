@@ -3,6 +3,7 @@
     <h1 class="text-4xl leading-none font-medium mr-auto">
       Sign up
     </h1>
+
     <%= link_to(
       sign_in_path,
       class: "p-2 rounded-full bg-gray-800 text-white inline-flex leading-none items-center"
@@ -27,6 +28,17 @@
           name="user[username]"
           class="block w-full border-solid border-gray-400 border p-2 rounded"
         />
+      </label>
+
+      <label class="block mt-3">
+        <span class="block mb-2">
+          Timezone
+        </span>
+        <%= render(TimeZoneSelectComponent.new(
+          name: "user[time_zone]",
+          class: "block w-full border-solid border-gray-400 border p-2 rounded",
+          value: ActiveSupport::TimeZone.new(@user.time_zone),
+        )) %>
       </label>
 
       <label class="block mt-3">

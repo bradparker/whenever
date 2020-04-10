@@ -18,7 +18,9 @@ class Events::NewLinkComponent < ViewComponent::Base
   attr_reader :time_range
 
   def starts_at
-    now = Time.now.utc
-    time_range.starts_at.to_time(:utc) + now.hour.hours
+    @starts_at ||= Time.use_zone(time_range.time_zone) do
+      now = Time.now
+      time_range.starts_at + now.hour.hours
+    end
   end
 end

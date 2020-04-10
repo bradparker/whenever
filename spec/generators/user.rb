@@ -1,7 +1,9 @@
 require "generative"
 require "degenerate"
 
+require_relative "bounded_string"
 require_relative "time"
+require_relative "time_zone"
 
 class UserGenerator
   def self.call(options = {})
@@ -14,6 +16,7 @@ class UserGenerator
       username: username,
       salt: salt,
       verifier: verifier,
+      time_zone: time_zone,
       created_at: created_at,
       updated_at: updated_at,
     )
@@ -32,8 +35,9 @@ class UserGenerator
   end
 
   def username
-    @username ||= options.fetch(:username, Generative.generate(:string, {
-      limit: 1000
+    @username ||= options.fetch(:username, Generative.generate(:bounded_string, {
+      min: 1,
+      max: 1000,
     }))
   end
 
@@ -43,6 +47,13 @@ class UserGenerator
 
   def verifier
     @verifier ||= options.fetch(:verifier, SecureRandom.hex(1024))
+  end
+
+  def time_zone
+    @time_zone ||= options.fetch(
+      :time_zone,
+      Generative.generate(:time_zone).tzinfo.identifier
+    )
   end
 
   def created_at

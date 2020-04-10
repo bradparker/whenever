@@ -6,9 +6,12 @@ class TimeRangesController < ApplicationController
   private
 
   def time_range
-    params[:name].classify.constantize.from_date(
-      Date.today,
-      user_id: current_user.id
-    )
+    Time.use_zone(current_user.time_zone) do
+      params[:name].classify.constantize.from_date(
+        Time.now.to_date,
+        time_zone: current_user.time_zone,
+        user_id: current_user.id
+      )
+    end
   end
 end

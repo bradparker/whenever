@@ -12,7 +12,7 @@ class Event < ApplicationRecord
   delegate :week, :month, :year, to: :day
 
   def day
-    Day.from_date(starts_at.to_date, user_id: user.id)
+    user.day_from_date(starts_at.in_time_zone(user.time_zone).to_date)
   end
 
   def time_range(name)

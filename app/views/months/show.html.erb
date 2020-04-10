@@ -4,9 +4,15 @@
 >
   <header class="p-3 md:px-6 bg-gray-800 text-white flex flex-wrap items-center">
     <%= link_to(
+      settings_path,
+      class: "block leading-tight hover:text-yellow-700 text-sm sm:text-base ml-auto"
+    ) do %>
+      Settings
+    <% end %>
+    <%= link_to(
       sign_out_path,
       method: :delete,
-      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base ml-auto"
+      class: "block leading-tight hover:text-yellow-700 text-sm sm:text-base ml-3"
     ) do %>
       Sign out
     <% end %>
@@ -40,7 +46,7 @@
       >
         <%= render(TimeRanges::LinkComponent.new(
           time_range: week,
-          class: "block bg-gray-600 text-white text-xs p-1 rounded"
+          class: "block #{if week.current? then "bg-red-500" else "bg-gray-600" end} text-white text-xs p-1 rounded"
         )) do %>
           W<%= week.value.to_s.rjust(2, "0") %>
         <% end %>
@@ -51,14 +57,14 @@
           class="
             py-2
             row-start-<%= index + 2 %>
-            col-start-<%= day.starts_at.cwday + 1 %>
+            col-start-<%= day.week_day + 1 %>
             border-sold
             border-gray-200
             border-t
           "
         >
           <%= render(TimeRanges::LinkComponent.new(time_range: day)) do %>
-            <span class="block mb-2 <%= if Date.today == day.starts_at then "text-red-600 font-bold" end %>">
+            <span class="block mb-2 <%= if day.current? then "text-red-600 font-bold" end %>">
               <%= day.value.to_s %>
             </span>
             <% if day.event_count > 0 %>

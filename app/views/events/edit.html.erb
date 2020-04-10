@@ -1,9 +1,15 @@
 <main>
   <header class="p-3 md:px-6 bg-gray-800 text-white flex flex-wrap items-center">
     <%= link_to(
+      settings_path,
+      class: "block leading-tight hover:text-yellow-700 text-sm sm:text-base ml-auto"
+    ) do %>
+      Settings
+    <% end %>
+    <%= link_to(
       sign_out_path,
       method: :delete,
-      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base ml-auto"
+      class: "block leading-tight hover:text-yellow-700 text-sm sm:text-base ml-3"
     ) do %>
       Sign out
     <% end %>

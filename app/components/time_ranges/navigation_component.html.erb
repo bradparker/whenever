@@ -25,7 +25,7 @@
 
   <%= link_to(
     current_range_path,
-    class: "block p-3 rounded-full bg-yellow-500 leading-none hover:bg-yellow-700 text-sm sm:text-base"
+    class: "block p-3 rounded-full bg-yellow-500 leading-none hover:bg-yellow-700 text-sm sm:text-base #{if time_range.current? then "opacity-50" end}"
   ) do %>
     <%= current_range_display_name %>
   <% end %>

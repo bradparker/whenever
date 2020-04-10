@@ -7,7 +7,8 @@
   <% if event.errors.any? %>
     <div>
       <h2>
-        <%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:
+        <%= pluralize(event.errors.count, "error") %>
+        prohibited this event from being saved:
       </h2>
 
       <ul>
@@ -31,9 +32,9 @@
   </label>
 
   <div class="block mt-3">
-    <span class="block mb-2 w-full">
+    <label class="block mb-2 w-full" for="event[starts_at][date]">
       Start
-    </span>
+    </label>
 
     <div class="flex">
       <input name="event[starts_at][date]" type="date" value="<%= event.starts_at.to_date %>" class="block w-full border-solid border-gray-400 border p-2 rounded mr-2" />
@@ -42,9 +43,9 @@
   </div>
 
   <div class="block mt-3">
-    <span class="block mb-2 w-full">
+    <label class="block mb-2 w-full" for="event[ends_at][date]">
       End
-    </span>
+    </label>
 
     <div class="flex">
       <input name="event[ends_at][date]" type="date" value="<%= event.ends_at.to_date %>" class="block w-full border-solid border-gray-400 border p-2 rounded mr-2" />

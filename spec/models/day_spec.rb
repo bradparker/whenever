@@ -14,7 +14,9 @@ RSpec.describe Day do
 
       data (:day) do
         date = Generative.generate(:date)
-        time = date.to_time(:utc)
+        time = Time.use_zone(user.time_zone) do
+          Time.zone.local(date.year, date.month, date.day).utc
+        end
         count = Generative.generate(:integer, {
           min: 2,
           max: 100,
@@ -33,11 +35,17 @@ RSpec.describe Day do
           user: user,
           starts_at: {
             min: time,
-            max: time.end_of_day,
+            max: time + 1.day,
           }
         }).save!
 
-        Day.new(date.year, date.month, date.day, user_id: user.id)
+        Day.new(
+          date.year,
+          date.month,
+          date.day,
+          time_zone: user.time_zone,
+          user_id: user.id
+        )
       end
 
       it "returns only events for that day" do

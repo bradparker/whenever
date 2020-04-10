@@ -4,13 +4,20 @@
 >
   <header class="p-3 md:px-6 bg-gray-800 text-white flex flex-wrap items-center">
     <%= link_to(
+      settings_path,
+      class: "block leading-tight hover:text-yellow-700 text-sm sm:text-base ml-auto"
+    ) do %>
+      Settings
+    <% end %>
+    <%= link_to(
       sign_out_path,
       method: :delete,
-      class: "block leading-none hover:text-yellow-700 text-sm sm:text-base ml-auto"
+      class: "block leading-tight hover:text-yellow-700 text-sm sm:text-base ml-3"
     ) do %>
       Sign out
     <% end %>
   </header>
+
   <header class="p-3 md:p-6 bg-yellow-400 flex flex-wrap items-center">
     <%= render(TimeRanges::HeaderComponent.new(time_range: @week)) %>
   </header>
@@ -28,7 +35,7 @@
       <h2
         class="
           row-start-1
-          col-start-<%= days.first.starts_at.cwday + 1 %>
+          col-start-<%= days.first.week_day + 1 %>
           col-span-<%= days.count %>
           p-3
           font-bold
@@ -52,10 +59,10 @@
             top-0
             z-20
             row-start-2
-            col-start-<%= day.starts_at.cwday + 1 %>
+            col-start-<%= day.week_day + 1 %>
             p-2
             bg-white
-            <%= if day.starts_at == Date.today then "text-red-600 font-bold" end %>
+            <%= if day.current? then "text-red-600 font-bold" end %>
             text-center
             border-solid
             border-gray-200
@@ -79,7 +86,7 @@
         <div
           class="
             row-start-3
-            col-start-<%= day.starts_at.cwday + 1 %>
+            col-start-<%= day.week_day + 1 %>
             z-10
             px-1
             border-solid

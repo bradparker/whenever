@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  skip_before_action :authorize!
+  skip_before_action :authorize!, except: [:edit, :update]
 
   def new
     @user = User.new
@@ -13,6 +13,7 @@ class RegistrationsController < ApplicationController
         status: :created,
         json: @user.slice(
           :username,
+          :time_zone,
           :salt,
           :verifier,
           :created_at,
@@ -33,6 +34,7 @@ class RegistrationsController < ApplicationController
       status: :ok,
       json: @user.slice(
         :username,
+        :time_zone,
         :salt,
         :verifier,
         :created_at,
@@ -41,9 +43,28 @@ class RegistrationsController < ApplicationController
     )
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+
+    if @user.update(user_update_params)
+      flash[:notice] = "Settings updated"
+      redirect_to settings_path
+    else
+      render :edit
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:username, :salt, :verifier)
+    params.require(:user).permit(:username, :time_zone, :salt, :verifier)
+  end
+
+  def user_update_params
+    params.require(:user).permit(:username, :time_zone)
   end
 end

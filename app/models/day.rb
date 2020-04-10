@@ -5,11 +5,12 @@ require "forwardable"
 class Day
   include TimeRange::Naming
 
-  def self.from_date(date, user_id:, event_range: nil)
+  def self.from_date(date, time_zone:, user_id:, event_range: nil)
     new(
       date.year,
       date.month,
       date.day,
+      time_zone: time_zone,
       user_id: user_id,
       event_range: event_range,
     )
@@ -18,35 +19,65 @@ class Day
   extend Forwardable
   def_delegators :month, :year
 
-  attr_reader :month, :value
+  attr_reader :month, :value, :time_zone
 
   def initialize(
     year,
     month,
     value,
+    time_zone:,
     user_id:,
     event_range: nil
   )
-    @month = Month.new(year, month, user_id: user_id)
+    @month = Month.new(
+      year,
+      month,
+      time_zone: time_zone,
+      user_id: user_id
+    )
     @value = value
+    @time_zone = time_zone
     @user_id = user_id
     @event_range = event_range
   end
 
   def starts_at
-    Date.new(year.value, month.value, value)
+    @starts_at ||= Date.new(year.value, month.value, value)
+  end
+
+  def current?
+    Time.use_zone(time_zone) do
+      Time.now.to_date == starts_at
+    end
   end
 
   def prev
-    Day.from_date(starts_at.prev_day, user_id: user_id)
+    Day.from_date(
+      starts_at.prev_day.to_date,
+      time_zone: time_zone,
+      user_id: user_id
+    )
   end
 
   def next
-    Day.from_date(starts_at.next_day, user_id: user_id)
+    Day.from_date(
+      starts_at.next_day.to_date,
+      time_zone: time_zone,
+      user_id: user_id
+    )
   end
 
   def week
-    Week.new(starts_at.cwyear, starts_at.cweek, user_id: user_id)
+    Week.new(
+      starts_at.to_date.cwyear,
+      starts_at.to_date.cweek,
+      time_zone: time_zone,
+      user_id: user_id
+    )
+  end
+
+  def week_day
+    starts_at.to_date.cwday
   end
 
   def events
@@ -79,7 +110,8 @@ class Day
 
   def event_range
     @event_range ||= EventRange.new(
-      starts_at.all_day,
+      [starts_at],
+      time_zone: time_zone,
       user_id: user_id,
     )
   end

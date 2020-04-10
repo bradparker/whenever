@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Week do
-  def safe_week(year, week)
+  def safe_week(year, week, time_zone)
     begin
-      Week.new(year, week, user_id: "UNKNOWN")
+      Week.new(year, week, time_zone: time_zone, user_id: "UNKNOWN")
     rescue ArgumentError => e
       if e.message != "invalid date"
         raise e
       end
-      safe_week(year, week - 1)
+      safe_week(year, week - 1, time_zone)
     end
   end
 
@@ -16,6 +16,7 @@ RSpec.describe Week do
     context "for all weeks" do
       generative do
         data (:week) do
+          time_zone = Generative.generate(:time_zone)
           year = Generative.generate(:integer, {
             min: 0,
             max: 9999,
@@ -24,7 +25,7 @@ RSpec.describe Week do
             min: 1,
             max: 53,
           })
-          safe_week(year, week)
+          safe_week(year, week, time_zone)
         end
 
         it "always returns seven days" do
@@ -36,12 +37,13 @@ RSpec.describe Week do
     context "for the first week of the year" do
       generative do
         data (:week) do
+          time_zone = Generative.generate(:time_zone)
           year = Generative.generate(:integer, {
             min: 0,
             max: 9999,
           })
 
-          Week.new(year, 1, user_id: "UNKNOWN")
+          Week.new(year, 1, time_zone: time_zone, user_id: "UNKNOWN")
         end
 
         it "returns days in the last week and a half in December the previous year, or the first week and a half of January of that year" do
@@ -62,12 +64,13 @@ RSpec.describe Week do
     context "for the last week of the year" do
       generative do
         data (:week) do
+          time_zone = Generative.generate(:time_zone)
           year = Generative.generate(:integer, {
             min: 0,
             max: 9999,
           })
 
-          safe_week(year, 53)
+          safe_week(year, 53, time_zone)
         end
 
         it "returns days in the final week and a half of December of that year, or first week and a half of January the next year" do
@@ -88,6 +91,7 @@ RSpec.describe Week do
     context "for neither the first nor last week of the year" do
       generative do
         data (:week) do
+          time_zone = Generative.generate(:time_zone)
           year = Generative.generate(:integer, {
             min: 0,
             max: 9999,
@@ -97,7 +101,7 @@ RSpec.describe Week do
             max: 51,
           })
 
-          Week.new(year, week, user_id: "UNKNOWN")
+          Week.new(year, week, time_zone: time_zone, user_id: "UNKNOWN")
         end
 
         it "returns days who's year must be equal to the week's year" do

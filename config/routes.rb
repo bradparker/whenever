@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   get "sign_up", to: "registrations#new"
+  get "settings", to: "registrations#edit"
 
-  resources :registrations, only: [:new]
+  resources :registrations, only: [:new, :update]
   constraints format: :json do
     resources :registrations, only: [:create, :show], param: :username
   end

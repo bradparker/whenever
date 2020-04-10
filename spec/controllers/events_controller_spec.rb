@@ -56,6 +56,7 @@ RSpec.describe EventsController, type: :controller do
           2020,
           03,
           03,
+          time_zone: authenticatable_user.user.time_zone,
           user_id: authenticatable_user.user.id,
         )
       )
@@ -72,6 +73,7 @@ RSpec.describe EventsController, type: :controller do
           Month.new(
             2020,
             04,
+            time_zone: authenticatable_user.user.time_zone,
             user_id: authenticatable_user.user.id,
           )
         )

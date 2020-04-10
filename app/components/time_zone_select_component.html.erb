@@ -1,0 +1,10 @@
+<select name="<%= name %>" class="<%= classes %>">
+  <% timezones.each do |timezone| %>
+    <option
+      value="<%= timezone.tzinfo.identifier %>"
+      <%= if value == timezone then "selected" end%>
+    >
+      <%= timezone %>
+    </option>
+  <% end %>
+</select>
