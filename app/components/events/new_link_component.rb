@@ -19,8 +19,13 @@ class Events::NewLinkComponent < ViewComponent::Base
 
   def starts_at
     @starts_at ||= Time.use_zone(time_range.time_zone) do
-      now = Time.now
-      time_range.starts_at + now.hour.hours
+      now = Time.zone.now
+      Time.zone.local(
+        time_range.starts_at.year,
+        time_range.starts_at.month,
+        time_range.starts_at.day,
+        now.hour
+      )
     end
   end
 end
